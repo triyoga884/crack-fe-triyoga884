@@ -1,9 +1,13 @@
-import Image from 'next/image';
+import Banner from '@/components/Banner';
+import Service from '@/components/Service';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <div className="bg-primary h-100">
-      <h1 className="bg-accent">Hello</h1>
+    <div className="bg-primary-foreground flex flex-col gap-4 ">
+      <Banner />
+      <Service />
+      <Footer />
     </div>
   );
 }
