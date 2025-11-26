@@ -1,14 +1,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+
 import {
   InputGroup,
   InputGroupAddon,
@@ -35,8 +28,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
+import RoomCard from '@/components/RoomCard';
+import SearchBar from '@/components/SearchBar';
 
 function Page() {
   const { data } = useQuery({
@@ -62,64 +55,15 @@ function Page() {
 
   return (
     <div className="min-h-screen container mx-auto px-4">
-      <div className="search-bar flex flex-col lg:flex-row gap-4 mt-8">
-        <InputGroup>
-          <InputGroupInput
-            value={search}
-            onChange={(e: any) => setSearch(e.target.value)}
-            placeholder="Search..."
-          />
-          <InputGroupAddon>
-            <SearchIcon />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            <InputGroupButton onClick={() => handleSearch(search)}>
-              Search
-            </InputGroupButton>
-          </InputGroupAddon>
-        </InputGroup>
-        <Select onValueChange={(value: string) => handleCategoryChange(value)}>
-          <SelectTrigger className="w-full lg:w-1/2">
-            <SelectValue placeholder="Select Room Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Type</SelectItem>
-            <SelectItem value="meeting-room">Meeting Room</SelectItem>
-            <SelectItem value="private-office">Private Office</SelectItem>
-            <SelectItem value="podcast-studio">Podcast Studio</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <SearchBar
+        search={search}
+        setSearch={setSearch}
+        handleSearch={handleSearch}
+        handleCategoryChange={handleCategoryChange}
+      />
       <div className="workspaces-list grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4 place-items-stretch">
         {data?.map((e: Room) => (
-          <Card key={`room-${e.id}`} className="justify-between">
-            <CardHeader>
-              <Image
-                src={e.images[0]}
-                alt={e.name}
-                width={400}
-                height={300}
-                unoptimized
-              />
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CardTitle>{e.name}</CardTitle>
-              <CardDescription>{e.address}</CardDescription>
-              <div className="flex justify-between">
-                <div>
-                  <p>{e.capacity} people</p>
-                  <p>{e.room_type}</p>
-                </div>
-                <div>
-                  <p>{e.price_per_hour}/hour</p>
-                  <p>{e.price_per_day}/day</p>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex-row-reverse">
-              <Button>Book Now</Button>
-            </CardFooter>
-          </Card>
+          <RoomCard key={`room-${e.id}`} {...e} />
         ))}
       </div>
       <Pagination className="mt-8">
