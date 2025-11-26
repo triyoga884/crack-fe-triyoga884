@@ -4,7 +4,7 @@ import DesktopFooter from './DesktopFooter';
 
 function Footer() {
   return (
-    <div className="footer bg-primary p-4 text-primary-foreground">
+    <div className="footer bg-primary mt-4 md:mt-20 p-4 md:py-8 text-primary-foreground rounded-t-xl">
       <div className="container mx-auto">
         <MobileFooter />
         <DesktopFooter />

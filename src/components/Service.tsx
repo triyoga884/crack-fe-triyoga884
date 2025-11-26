@@ -16,7 +16,7 @@ function Service() {
         <TabsContent value="private-office">
           <div className="wrapper md:flex md:gap-4">
             <Image
-              className="mx-auto"
+              className="mx-auto rounded-xl"
               src="/images/private-office.jpg"
               alt="private office"
               width={400}
@@ -48,7 +48,7 @@ function Service() {
         <TabsContent value="meeting-room">
           <div className="wrapper md:flex md:gap-4">
             <Image
-              className="mx-auto"
+              className="mx-auto rounded-xl"
               src="/images/meeting-room.jpg"
               alt="meeting room"
               width={400}
@@ -80,7 +80,7 @@ function Service() {
         <TabsContent value="podcast-studio">
           <div className="wrapper md:flex md:gap-4">
             <Image
-              className="mx-auto"
+              className="mx-auto rounded-xl"
               src="/images/podcast-studio.jpg"
               alt="podcast studio"
               width={400}

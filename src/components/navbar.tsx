@@ -50,7 +50,7 @@ function Navbar() {
             <Link href="/" className="text-sm font-medium">
               Home
             </Link>
-            <Link href="/" className="text-sm font-medium">
+            <Link href="/workspaces" className="text-sm font-medium">
               Workspaces
             </Link>
           </nav>

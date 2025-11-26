@@ -1,16 +1,18 @@
 import type { NextConfig } from 'next';
 
-// const nextConfig: NextConfig = {
-//   /* config options here */
-//   images: {
-//     remotePatterns: [new URL('https://placehold.co/**')],
-//   },
-// };
-
-// export default nextConfig;
-
-module.exports = {
+const nextConfig: NextConfig = {
+  /* config options here */
+  reactStrictMode: true,
   images: {
-    remotePatterns: [new URL('https://placehold.co/**')],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
+
+export default nextConfig;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 function DesktopFooter() {
   return (
-    <div className="desktop-footer hidden md:grid grid-cols-4">
+    <div className="desktop-footer hidden md:grid grid-cols-4 gap-4">
       <div>
         <h1 className="text-2xl font-bold ">WORKBASE</h1>
         <p className="">Book Your Space, Unlock Your Potential</p>
