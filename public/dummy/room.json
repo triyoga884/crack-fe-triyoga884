@@ -9,10 +9,8 @@
     "is_active": true,
     "room_type": "meeting room",
     "address": "221 Beach Road, Santa Monica, CA 90401",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A bright meeting room overlooking the coastline, perfect for team discussions and presentations."
   },
   {
     "id": 2,
@@ -24,10 +22,8 @@
     "is_active": true,
     "room_type": "private office",
     "address": "580 Market Street, San Francisco, CA 94104",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A quiet private office ideal for small teams, freelancers, or focused solo work."
   },
   {
     "id": 3,
@@ -39,10 +35,8 @@
     "is_active": false,
     "room_type": "podcast studio",
     "address": "34 Sunset Blvd, Los Angeles, CA 90026",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A fully equipped podcast studio with professional-grade audio gear and soundproof walls."
   },
   {
     "id": 4,
@@ -54,10 +48,8 @@
     "is_active": true,
     "room_type": "meeting room",
     "address": "1000 Wilshire Blvd, Los Angeles, CA 90017",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A spacious boardroom designed for executive meetings, workshops, and strategy sessions."
   },
   {
     "id": 5,
@@ -69,10 +61,8 @@
     "is_active": true,
     "room_type": "private office",
     "address": "729 Mission Street, San Francisco, CA 94103",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A cozy workspace perfect for a small team needing privacy and reliable amenities."
   },
   {
     "id": 6,
@@ -84,10 +74,8 @@
     "is_active": true,
     "room_type": "podcast studio",
     "address": "81 Melrose Ave, Los Angeles, CA 90029",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A modern and cozy studio ideal for podcast creators and small-scale audio production."
   },
   {
     "id": 7,
@@ -99,10 +87,8 @@
     "is_active": false,
     "room_type": "meeting room",
     "address": "241 Madison Ave, New York, NY 10016",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "An upscale meeting space equipped for high-level discussions and executive collaboration."
   },
   {
     "id": 8,
@@ -114,10 +100,8 @@
     "is_active": true,
     "room_type": "private office",
     "address": "210 Broadway, New York, NY 10007",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A compact private office designed for focused individual work or remote meetings."
   },
   {
     "id": 9,
@@ -129,10 +113,8 @@
     "is_active": true,
     "room_type": "private office",
     "address": "55 W 39th St, New York, NY 10018",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A well-equipped office tailored for productive team collaboration with modern furnishings."
   },
   {
     "id": 10,
@@ -144,10 +126,8 @@
     "is_active": true,
     "room_type": "meeting room",
     "address": "500 Tech Way, Austin, TX 78701",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A versatile meeting room designed for brainstorming, presentations, and agile teamwork."
   },
   {
     "id": 11,
@@ -159,10 +139,8 @@
     "is_active": true,
     "room_type": "podcast studio",
     "address": "1900 Sound Ave, Nashville, TN 37203",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A professional-grade recording studio perfect for podcasters, voice actors, and audio producers."
   },
   {
     "id": 12,
@@ -174,9 +152,7 @@
     "is_active": false,
     "room_type": "private office",
     "address": "100 Congress Ave, Austin, TX 78701",
-    "images": [
-      "https://placehold.co/600x400",
-      "https://placehold.co/600x400"
-    ]
+    "images": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+    "desc": "A simple and calm workspace designed for focused work and uninterrupted productivity."
   }
 ]

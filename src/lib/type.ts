@@ -15,6 +15,7 @@ export interface Room {
   room_type: RoomType;
   address: string;
   images: string[];
+  desc: string;
 }
 
 export type WorkspaceTab = {
