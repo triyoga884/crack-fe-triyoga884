@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from './ui/button';
+import Link from 'next/link';
 
 function Banner() {
   return (
@@ -10,9 +11,11 @@ function Banner() {
       <h2 className="text-primary-foreground text-lg md:text-3xl text-shadow-lg/30 ">
         Book your space and unlock your potential.
       </h2>
-      <Button className=" mt-3 text-primary-foreground text-lg">
-        Book Now
-      </Button>
+      <Link href="/workspaces">
+        <Button className=" mt-3 text-primary-foreground text-lg">
+          Book Now
+        </Button>
+      </Link>
     </div>
   );
 }

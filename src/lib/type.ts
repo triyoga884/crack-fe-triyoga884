@@ -16,3 +16,11 @@ export interface Room {
   address: string;
   images: string[];
 }
+
+export type WorkspaceTab = {
+  name: string;
+  value: string;
+  desc: string;
+  key_benefit: string[];
+  image: string;
+};

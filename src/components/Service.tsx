@@ -3,112 +3,53 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import React from 'react';
+import Link from 'next/link';
+import { WorkspaceTab } from '@/lib/type';
 
 function Service() {
+  const data: WorkspaceTab[] = require('@/assets/data/WorkspaceTab.json');
+  console.log(data[0]);
   return (
-    <div className="tab-workspace container mx-auto bg-card">
-      <Tabs defaultValue="private-office">
+    <div className="tab-workspace container mx-auto bg-card p-6 rounded-xl my-8 min-h-[400px]">
+      <Tabs defaultValue={data[0].value}>
         <TabsList>
-          <TabsTrigger value="private-office">Private Office</TabsTrigger>
-          <TabsTrigger value="meeting-room">Meeting Room</TabsTrigger>
-          <TabsTrigger value="podcast-studio">Podcast Studio</TabsTrigger>
+          {data.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value}>
+              {tab.name}
+            </TabsTrigger>
+          ))}
         </TabsList>
-        <TabsContent value="private-office">
-          <div className="wrapper md:flex md:gap-4">
-            <Image
-              className="mx-auto rounded-xl"
-              src="/images/private-office.jpg"
-              alt="private office"
-              width={400}
-              height={400}
-            ></Image>
-            <div className="content p-2 flex flex-col gap-4">
-              <div className="desc">
-                <h1 className="text-lg font-medium">Private Office</h1>
-                <p className="text-justify">
-                  Secure your own dedicated, fully-furnished space built for
-                  focus and confidentiality. Our Private Offices are perfect for
-                  small teams or individuals who need a permanent, branded hub
-                  where they can work without distraction.
-                </p>
+        {data.map((tab) => (
+          <TabsContent value={tab.value} key={tab.value}>
+            <div className="wrapper md:flex md:gap-8">
+              <Image
+                className="mx-auto rounded-xl object-cover"
+                src={tab.image}
+                alt={tab.name}
+                unoptimized
+                width={400}
+                height={400}
+              ></Image>
+              <div className="content p-2 flex flex-col gap-4">
+                <div className="desc">
+                  <h1 className="text-2xl font-bold">{tab.name}</h1>
+                  <p className="text-justify">{tab.desc}</p>
+                </div>
+                <div className="benefit">
+                  <h2 className="text-lg font-medium">Key Benefit</h2>
+                  <ul>
+                    {tab.key_benefit.map((benefit, index) => (
+                      <li key={index}>{benefit}</li>
+                    ))}
+                  </ul>
+                </div>
+                <Link href={`/workspaces?type=${tab.value}`}>
+                  <Button className="w-full md:w-fit">Book Now</Button>
+                </Link>
               </div>
-              <div className="benefit">
-                <h2 className="text-lg font-medium">Key Benefit</h2>
-                <ul>
-                  <li>🔒 Total Privacy</li>
-                  <li>🔑 24/7 Access</li>
-                  <li>🏢 Professional Branding</li>
-                  <li>⚙️ Customizable Setup</li>
-                </ul>
-              </div>
-              <Button className="w-full md:w-fit">Book Now</Button>
             </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="meeting-room">
-          <div className="wrapper md:flex md:gap-4">
-            <Image
-              className="mx-auto rounded-xl"
-              src="/images/meeting-room.jpg"
-              alt="meeting room"
-              width={400}
-              height={400}
-            ></Image>
-            <div className="content p-2 flex flex-col gap-4">
-              <div className="desc">
-                <h1 className="text-lg font-medium">Meeting Room</h1>
-                <p className="text-justify">
-                  Professional, technology-equipped rooms designed for seamless
-                  collaboration and client presentations. Choose the right size,
-                  from intimate huddle rooms to large boardrooms, all with
-                  plug-and-play simplicity.
-                </p>
-              </div>
-              <div className="benefit">
-                <h2 className="text-lg font-medium">Key Benefit</h2>
-                <ul>
-                  <li>💻 Seamless Tech</li>
-                  <li>🤝 Client Ready</li>
-                  <li>📅 Flexibility</li>
-                  <li>🛠️ Supported</li>
-                </ul>
-              </div>
-              <Button className="w-full md:w-fit">Book Now</Button>
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="podcast-studio">
-          <div className="wrapper md:flex md:gap-4">
-            <Image
-              className="mx-auto rounded-xl"
-              src="/images/podcast-studio.jpg"
-              alt="podcast studio"
-              width={400}
-              height={400}
-            ></Image>
-            <div className="content p-2 flex flex-col gap-4">
-              <div className="desc">
-                <h1 className="text-lg font-medium">Podcast Studio</h1>
-                <p className="text-justify">
-                  Step into our acoustically-treated, soundproof studio, ready
-                  with professional-grade microphones, mixers, and lighting.
-                  This is the ultimate dedicated space to record high-quality
-                  audio and video content without interference.
-                </p>
-              </div>
-              <div className="benefit">
-                <h2 className="text-lg font-medium">Key Benefit</h2>
-                <ul>
-                  <li>🎙️ Broadcast Quality</li>
-                  <li>🔇 Soundproof Environment</li>
-                  <li>✨ Ready-to-Go</li>
-                  <li>🎯 Focus on Content</li>
-                </ul>
-              </div>
-              <Button className="w-full md:w-fit">Book Now</Button>
-            </div>
-          </div>
-        </TabsContent>
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );

@@ -37,8 +37,8 @@ function Navbar() {
   );
 
   return (
-    <header className="container mx-auto">
-      <div className="flex justify-between items-center p-2">
+    <header className="shadow-sm sticky top-0 bg-white z-50">
+      <div className="flex justify-between items-center p-2 container mx-auto">
         <div className="flex items-center">
           <Link href="/">
             <Image width={100} height={20} src="/images/logo2.png" alt="logo" />
