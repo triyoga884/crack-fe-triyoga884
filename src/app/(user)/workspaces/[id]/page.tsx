@@ -37,6 +37,7 @@ import { Calendar } from '@/components/ui/calendar';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 const bookingSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -55,6 +56,7 @@ function Page() {
       return response.json();
     },
   });
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof bookingSchema>>({
     resolver: zodResolver(bookingSchema),
@@ -70,6 +72,7 @@ function Page() {
 
   const onSubmit = (data: z.infer<typeof bookingSchema>) => {
     console.log(data);
+    router.push('/checkout');
   };
 
   const [calenderStartOpen, setCalendarStartOpen] = useState(false);
