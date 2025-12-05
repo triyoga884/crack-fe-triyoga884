@@ -8,10 +8,10 @@ export interface Room {
   id: number;
   name: string;
   capacity: number;
-  price_per_hour: number;
   price_per_day: number;
   amenities: string[];
   is_active: boolean;
+  is_verified: boolean;
   room_type: RoomType;
   address: string;
   images: string[];

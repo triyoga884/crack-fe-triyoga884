@@ -33,7 +33,6 @@ function RoomCard(e: Room) {
             <p>{e.room_type}</p>
           </div>
           <div>
-            <p>{e.price_per_hour}/hour</p>
             <p>{e.price_per_day}/day</p>
           </div>
         </div>
