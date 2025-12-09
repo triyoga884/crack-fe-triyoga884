@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { RoomType } from './type';
+import { RoomType, UserRoles } from './type';
 
 export const BookingSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -21,4 +21,12 @@ export const WorkspaceSchema = z.object({
   desc: z.string().min(1, 'Description is required'),
   is_active: z.boolean(),
   is_verified: z.boolean(),
+});
+
+export const UserSchema = z.object({
+  id: z.number(),
+  name: z.string().min(4, 'Name atleast 4 character'),
+  email: z.email(),
+  password: z.string().min(4, 'Password atleast 4 character'),
+  role: z.enum(UserRoles).default(UserRoles.USER),
 });

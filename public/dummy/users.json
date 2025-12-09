@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "role": "user",
+    "password": "password123"
+  },
+  {
+    "id": 2,
+    "name": "Brian Smith",
+    "email": "brian.smith@example.com",
+    "role": "provider",
+    "password": "securePass456"
+  },
+  {
+    "id": 3,
+    "name": "Cynthia Lee",
+    "email": "cynthia.lee@example.com",
+    "role": "user",
+    "password": "myPass789"
+  },
+  {
+    "id": 4,
+    "name": "David Kim",
+    "email": "david.kim@example.com",
+    "role": "provider",
+    "password": "providerPass001"
+  },
+  {
+    "id": 5,
+    "name": "Emma Davis",
+    "email": "emma.davis@example.com",
+    "role": "user",
+    "password": "userPass002"
+  },
+  {
+    "id": 6,
+    "name": "Frank Miller",
+    "email": "frank.miller@example.com",
+    "role": "provider",
+    "password": "safePass003"
+  },
+  {
+    "id": 7,
+    "name": "Grace Brown",
+    "email": "grace.brown@example.com",
+    "role": "user",
+    "password": "gracePwd004"
+  },
+  {
+    "id": 8,
+    "name": "Henry Wilson",
+    "email": "henry.wilson@example.com",
+    "role": "provider",
+    "password": "henryPwd005"
+  },
+  {
+    "id": 9,
+    "name": "Isabella Martinez",
+    "email": "isabella.martinez@example.com",
+    "role": "user",
+    "password": "isaPwd006"
+  },
+  {
+    "id": 10,
+    "name": "Jack Thompson",
+    "email": "jack.thompson@example.com",
+    "role": "provider",
+    "password": "jackPwd007"
+  }
+]

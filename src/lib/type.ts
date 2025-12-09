@@ -4,6 +4,12 @@ export enum RoomType {
   PODCAST_STUDIO = 'podcast studio',
 }
 
+export enum UserRoles {
+  USER = 'user',
+  PROVIDER = 'provider',
+  ADMIN = 'admin',
+}
+
 export interface Room {
   id: number;
   name: string;
@@ -24,4 +30,12 @@ export type WorkspaceTab = {
   desc: string;
   key_benefit: string[];
   image: string;
+};
+
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: UserRoles;
 };

@@ -15,7 +15,6 @@ import {
   Briefcase,
   Home,
   User,
-  ShieldUser,
   User2,
   ChevronUp,
   CheckLine,
@@ -24,8 +23,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
@@ -45,11 +42,6 @@ const items = [
     title: 'Users',
     url: '/admin/dashboard/users',
     icon: User,
-  },
-  {
-    title: 'Providers',
-    url: '/admin/dashboard/providers',
-    icon: ShieldUser,
   },
   {
     title: 'Approvals',
