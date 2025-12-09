@@ -16,10 +16,9 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import Link from 'next/link';
 import { useState } from 'react';
+import EditWorkspaceFormModalAdmin from '@/components/EditWorkspaceFormModalAdmin';
 
 export const columns: ColumnDef<Room>[] = [
   {
@@ -47,6 +46,10 @@ export const columns: ColumnDef<Room>[] = [
     header: 'Price Per Day',
   },
   {
+    accessorKey: 'amenities',
+    header: 'Amenities',
+  },
+  {
     accessorKey: 'address',
     header: 'Address',
   },
@@ -54,6 +57,7 @@ export const columns: ColumnDef<Room>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const workspace = row.original;
+      const dummy = require('../../../../../public/dummy/1room.json');
 
       const handleDelete = (id: number) => {
         alert(id);
@@ -61,6 +65,7 @@ export const columns: ColumnDef<Room>[] = [
       };
 
       const [open, setOpen] = useState(false);
+      const [editOpen, setEditOpen] = useState(false);
       return (
         <>
           <DropdownMenu>
@@ -71,10 +76,14 @@ export const columns: ColumnDef<Room>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem className="hover:cursor-pointer">
-                <Link href={`/admin/dashboard/workspace/edit/${workspace.id}`}>
-                  Edit
-                </Link>
+              <DropdownMenuItem
+                className="hover:cursor-pointer"
+                onSelect={(e: any) => {
+                  e.preventDefault();
+                  setEditOpen(true);
+                }}
+              >
+                Edit
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="hover:cursor-pointer"
@@ -87,6 +96,13 @@ export const columns: ColumnDef<Room>[] = [
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <Dialog open={editOpen} onOpenChange={setEditOpen}>
+            <EditWorkspaceFormModalAdmin
+              setDialog={setEditOpen}
+              payload={dummy}
+            />
+          </Dialog>
 
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>

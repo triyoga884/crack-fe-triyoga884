@@ -45,9 +45,9 @@ function SearchBar({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Type</SelectItem>
-          <SelectItem value="meeting-room">Meeting Room</SelectItem>
-          <SelectItem value="private-office">Private Office</SelectItem>
-          <SelectItem value="podcast-studio">Podcast Studio</SelectItem>
+          <SelectItem value="meeting room">Meeting Room</SelectItem>
+          <SelectItem value="private office">Private Office</SelectItem>
+          <SelectItem value="podcast studio">Podcast Studio</SelectItem>
         </SelectContent>
       </Select>
     </div>

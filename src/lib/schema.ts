@@ -1,0 +1,24 @@
+import * as z from 'zod';
+import { RoomType } from './type';
+
+export const BookingSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.email('Invalid email address'),
+  contact: z.string().min(10, 'Contact number is required'),
+  companyName: z.string().optional(),
+  startDate: z.date(),
+  endDate: z.date(),
+});
+
+export const WorkspaceSchema = z.object({
+  name: z.string().min(1, 'Workspace name is required'),
+  capacity: z.coerce.number().min(1, 'Capacity must be at least 1'),
+  amenities: z.array(z.string()).min(1, 'At least one amenity is required'),
+  price_per_day: z.coerce.number().min(1, 'Price per day must be at least 1'),
+  room_type: z.enum(RoomType).default(RoomType.PRIVATE_OFFICE),
+  address: z.string().min(1, 'Address is required'),
+  images: z.array(z.url()).min(1, 'At least one image is required'),
+  desc: z.string().min(1, 'Description is required'),
+  is_active: z.boolean(),
+  is_verified: z.boolean(),
+});
