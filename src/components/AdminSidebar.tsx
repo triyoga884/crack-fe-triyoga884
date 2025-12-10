@@ -30,22 +30,22 @@ import Link from 'next/link';
 const items = [
   {
     title: 'Home',
-    url: '/admin/dashboard',
+    url: '/dashboard',
     icon: Home,
   },
   {
     title: 'Workspace',
-    url: '/admin/dashboard/workspace',
+    url: '/dashboard/workspace',
     icon: Briefcase,
   },
   {
     title: 'Users',
-    url: '/admin/dashboard/users',
+    url: '/dashboard/users',
     icon: User,
   },
   {
     title: 'Approvals',
-    url: '/admin/dashboard/approvals',
+    url: '/dashboard/approvals',
     icon: CheckLine,
   },
 ];

@@ -32,11 +32,6 @@ function Page() {
         </div>
         <div className="flex p-4 gap-4">
           <Card>
-            {/* awaiting workspaces approval list */}
-            <h2>Awaiting Workspaces Approval List</h2>
-            <p>12 left</p>
-          </Card>
-          <Card>
             <h2>Awaiting Workspaces Approval List</h2>
             <p>12 left</p>
           </Card>
