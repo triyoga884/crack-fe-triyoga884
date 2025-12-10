@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Room } from '@/lib/type';
+import { User } from '@/lib/type';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,7 +20,7 @@ import {
 import { useState } from 'react';
 import EditUserFormModalAdmin from '@/components/EditUserFormModalAdmin';
 
-export const columns: ColumnDef<Room>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'id',
     header: 'Id',
@@ -40,9 +40,7 @@ export const columns: ColumnDef<Room>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const workspace = row.original;
-      const dummy = require('../../../../../public/dummy/1user.json');
-
+      const user = row.original;
       const handleDelete = (id: number) => {
         alert(id);
         setOpen(false);
@@ -82,7 +80,7 @@ export const columns: ColumnDef<Room>[] = [
           </DropdownMenu>
 
           <Dialog open={editOpen} onOpenChange={setEditOpen}>
-            <EditUserFormModalAdmin setDialog={setEditOpen} payload={dummy} />
+            <EditUserFormModalAdmin setDialog={setEditOpen} payload={user} />
           </Dialog>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
@@ -90,7 +88,7 @@ export const columns: ColumnDef<Room>[] = [
                 <DialogTitle>Warning</DialogTitle>
                 <DialogDescription>
                   <p>
-                    Are you sure you want to delete "{workspace.name}
+                    Are you sure you want to delete "{user.name}
                     "?
                   </p>
                   <div className="mt-4 flex justify-end space-x-2">
@@ -99,7 +97,7 @@ export const columns: ColumnDef<Room>[] = [
                     </Button>
                     <Button
                       variant="destructive"
-                      onClick={() => handleDelete(workspace.id)}
+                      onClick={() => handleDelete(user.id)}
                     >
                       Delete
                     </Button>
