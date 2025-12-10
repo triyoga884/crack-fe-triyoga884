@@ -20,24 +20,28 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import Link from 'next/link';
-
-const signupSchema = z.object({
-  name: z.string().min(4, 'Name at least 4 characters'),
-  email: z.email(),
-  password: z.string(),
-});
+import { SignupSchema, signupSchema } from '@/lib/schema';
+import { UserRoles } from '@/lib/type';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 function SignUpForm() {
-  const form = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<SignupSchema>({
+    resolver: zodResolver(signupSchema) as any,
     defaultValues: {
       name: '',
       email: '',
       password: '',
+      role: UserRoles.USER,
     },
   });
 
-  const onSubmit = (data: z.infer<typeof signupSchema>) => {
+  const onSubmit = (data: SignupSchema) => {
     console.log(data);
   };
 
@@ -104,6 +108,26 @@ function SignUpForm() {
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="role"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>User Roles</FieldLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-full lg:w-1/2">
+                      <SelectValue placeholder="Select Role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="provider">Provider</SelectItem>
+                      {/* <SelectItem value="admin">Admin</SelectItem> */}
+                    </SelectContent>
+                  </Select>
+                  <FieldError>{fieldState.error?.message}</FieldError>
                 </Field>
               )}
             />

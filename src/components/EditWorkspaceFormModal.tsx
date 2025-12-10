@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Field,
   FieldError,
@@ -16,8 +17,7 @@ import {
 } from '@/components/ui/field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { WorkspaceSchema } from '@/lib/schema';
+import { WorkspaceSchema, workspaceSchema } from '@/lib/schema';
 import { Room, RoomType } from '@/lib/type';
 import {
   Select,
@@ -27,9 +27,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-function EditWorkspaceFormModal({ payload }: { payload: Room | null }) {
-  const form = useForm<z.infer<typeof WorkspaceSchema>>({
-    resolver: zodResolver(WorkspaceSchema) as any,
+function EditWorkspaceFormModal({
+  payload,
+  onClose,
+}: {
+  payload: Room | null;
+  onClose?: () => void;
+}) {
+  const form = useForm<WorkspaceSchema>({
+    resolver: zodResolver(workspaceSchema) as any,
     defaultValues: {
       name: payload?.name || '',
       capacity: payload?.capacity || 1,
@@ -68,23 +74,24 @@ function EditWorkspaceFormModal({ payload }: { payload: Room | null }) {
     name: 'images',
   });
 
-  const onSubmit = (data: z.infer<typeof WorkspaceSchema>) => {
-    console.log(data);
+  const onSubmit = (data: WorkspaceSchema) => {
+    console.log('Submitting data:', data);
+    onClose?.();
   };
 
   return (
-    <form id="workspace-edit-form" onSubmit={handleSubmit(onSubmit)}>
-      <DialogContent className="sm:max-w-[650px]">
+    <DialogContent className="sm:max-w-[650px] max-h-[90vh] overflow-y-auto">
+      <form id="workspace-edit-form" onSubmit={handleSubmit(onSubmit)}>
         <DialogHeader>
-          <DialogTitle>Edit Workspace</DialogTitle>
+          <DialogTitle>Edit Workspace - {payload?.name}</DialogTitle>
           <DialogDescription>
             Make changes to the workspace here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <FieldGroup className="grid md:grid-cols-2 gap-4">
+        <FieldGroup className="grid md:grid-cols-2 gap-4 py-4">
           <Controller
             name="name"
-            control={form.control}
+            control={control}
             render={({ field, fieldState }) => (
               <Field>
                 <FieldLabel>Name</FieldLabel>
@@ -95,15 +102,137 @@ function EditWorkspaceFormModal({ payload }: { payload: Room | null }) {
           />
           <Controller
             name="capacity"
-            control={form.control}
+            control={control}
             render={({ field, fieldState }) => (
               <Field>
                 <FieldLabel>Capacity</FieldLabel>
-                <Input type="number" {...field} placeholder="Capacity" />
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder="Capacity"
+                />
                 <FieldError>{fieldState.error?.message}</FieldError>
               </Field>
             )}
           />
+
+          <Controller
+            name="price_per_day"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>Price Per Day</FieldLabel>
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder="Price"
+                />
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="room_type"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>Room Type</FieldLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Room Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="meeting room">Meeting Room</SelectItem>
+                    <SelectItem value="private office">
+                      Private Office
+                    </SelectItem>
+                    <SelectItem value="podcast studio">
+                      Podcast Studio
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="is_active"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>Active Status</FieldLabel>
+                <Select
+                  value={String(field.value)}
+                  onValueChange={(v) => field.onChange(v === 'true')}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="true">Active</SelectItem>
+                    <SelectItem value="false">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="is_verified"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>Verified Status</FieldLabel>
+                <Select
+                  value={String(field.value)}
+                  onValueChange={(v) => field.onChange(v === 'true')}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Verification" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="true">Verified</SelectItem>
+                    <SelectItem value="false">Not Verified</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="address"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field className="md:col-span-2">
+                <FieldLabel>Address</FieldLabel>
+                <Input {...field} placeholder="Address" />
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="desc"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field className="md:col-span-2">
+                <FieldLabel>Description</FieldLabel>
+                <Textarea
+                  {...field}
+                  placeholder="Workspace description"
+                  rows={3}
+                />
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
           {/* AMENITIES – dynamic array */}
           <Field className="md:col-span-2">
             <FieldLabel>Amenities</FieldLabel>
@@ -133,77 +262,7 @@ function EditWorkspaceFormModal({ payload }: { payload: Room | null }) {
             </div>
             <FieldError>{errors.amenities?.message as string}</FieldError>
           </Field>
-          <Controller
-            name="price_per_day"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel>Price</FieldLabel>
-                <Input type="number" {...field} placeholder="Capacity" />
-                <FieldError>{fieldState.error?.message}</FieldError>
-              </Field>
-            )}
-          />
-          <Controller
-            name="is_active"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel>Active Status</FieldLabel>
-                <Select
-                  value={String(field.value)}
-                  onValueChange={(v) => field.onChange(v === 'true')}
-                >
-                  <SelectTrigger className="w-full lg:w-1/2">
-                    <SelectValue placeholder="Select Room Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="true">Active</SelectItem>
-                    <SelectItem value="false">Nonactive</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FieldError>{fieldState.error?.message}</FieldError>
-              </Field>
-            )}
-          />
-          <Controller
-            name="room_type"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel>Room Type</FieldLabel>
-                <Select
-                  value={field.value as any}
-                  onValueChange={field.onChange}
-                >
-                  <SelectTrigger className="w-full lg:w-1/2">
-                    <SelectValue placeholder="Select Room Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="meeting room">Meeting Room</SelectItem>
-                    <SelectItem value="private office">
-                      Private Office
-                    </SelectItem>
-                    <SelectItem value="podcast studio">
-                      Podcast Studio
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FieldError>{fieldState.error?.message}</FieldError>
-              </Field>
-            )}
-          />
-          <Controller
-            name="address"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel>Address</FieldLabel>
-                <Input {...field} placeholder="Address" />
-                <FieldError>{fieldState.error?.message}</FieldError>
-              </Field>
-            )}
-          />
+
           {/* IMAGES – dynamic array of URLs */}
           <Field className="md:col-span-2">
             <FieldLabel>Images (URLs)</FieldLabel>
@@ -235,12 +294,10 @@ function EditWorkspaceFormModal({ payload }: { payload: Room | null }) {
           </Field>
         </FieldGroup>
         <DialogFooter>
-          <Button type="submit" form="workspace-edit-form">
-            Save changes
-          </Button>
+          <Button type="submit">Save changes</Button>
         </DialogFooter>
-      </DialogContent>
-    </form>
+      </form>
+    </DialogContent>
   );
 }
 

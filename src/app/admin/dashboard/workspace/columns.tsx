@@ -18,7 +18,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useState } from 'react';
-import EditWorkspaceFormModalAdmin from '@/components/EditWorkspaceFormModalAdmin';
+import EditWorkspaceFormModal from '@/components/EditWorkspaceFormModal';
 
 export const columns: ColumnDef<Room>[] = [
   {
@@ -57,8 +57,6 @@ export const columns: ColumnDef<Room>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const workspace = row.original;
-      const dummy = require('../../../../../public/dummy/1room.json');
-
       const handleDelete = (id: number) => {
         alert(id);
         setOpen(false);
@@ -97,12 +95,14 @@ export const columns: ColumnDef<Room>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Dialog open={editOpen} onOpenChange={setEditOpen}>
-            <EditWorkspaceFormModalAdmin
-              setDialog={setEditOpen}
-              payload={dummy}
-            />
-          </Dialog>
+          {editOpen && (
+            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+              <EditWorkspaceFormModal
+                payload={workspace}
+                onClose={() => setEditOpen(false)}
+              />
+            </Dialog>
+          )}
 
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>

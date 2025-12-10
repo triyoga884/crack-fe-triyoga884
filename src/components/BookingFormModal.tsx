@@ -29,13 +29,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { BookingSchema } from '@/lib/schema';
+import { BookingSchema, bookingSchema } from '@/lib/schema';
 
 function BookingFormModal({ data }: any) {
   console.log(data);
   const router = useRouter();
-  const form = useForm<z.infer<typeof BookingSchema>>({
-    resolver: zodResolver(BookingSchema),
+  const form = useForm<BookingSchema>({
+    resolver: zodResolver(bookingSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -46,7 +46,7 @@ function BookingFormModal({ data }: any) {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof BookingSchema>) => {
+  const onSubmit = (data: BookingSchema) => {
     console.log(data);
     router.push('/checkout');
   };

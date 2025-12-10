@@ -78,10 +78,11 @@ export const columns: ColumnDef<User>[] = [
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Dialog open={editOpen} onOpenChange={setEditOpen}>
-            <EditUserFormModalAdmin setDialog={setEditOpen} payload={user} />
-          </Dialog>
+          {editOpen && (
+            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+              <EditUserFormModalAdmin setDialog={setEditOpen} payload={user} />
+            </Dialog>
+          )}
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
               <DialogHeader>

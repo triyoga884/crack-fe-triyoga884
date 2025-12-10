@@ -14,8 +14,7 @@ import {
 } from '@/components/ui/field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { UserSchema } from '@/lib/schema';
+import { UserSchema, userSchema } from '@/lib/schema';
 import { UserRoles, User } from '@/lib/type';
 import {
   Select,
@@ -32,8 +31,8 @@ function EditWorkspaceFormModalAdmin({
   payload: User | null;
   setDialog: any;
 }) {
-  const form = useForm<z.infer<typeof UserSchema>>({
-    resolver: zodResolver(UserSchema) as any,
+  const form = useForm<UserSchema>({
+    resolver: zodResolver(userSchema) as any,
     defaultValues: {
       id: payload?.id,
       name: payload?.name,
@@ -63,7 +62,7 @@ function EditWorkspaceFormModalAdmin({
                 <FieldLabel>User Roles</FieldLabel>
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full lg:w-1/2">
-                    <SelectValue placeholder="Select Room Status" />
+                    <SelectValue placeholder="Select Role" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="user">User</SelectItem>

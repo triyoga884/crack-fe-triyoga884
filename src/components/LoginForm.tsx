@@ -20,23 +20,35 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import Link from 'next/link';
-
-const loginSchema = z.object({
-  email: z.email(),
-  password: z.string(),
-});
+import { LoginSchema, loginSchema } from '@/lib/schema';
+import { useRouter } from 'next/navigation';
 
 function LoginForm() {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const router = useRouter();
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema) as any,
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
-    console.log(data);
+  const onSubmit = (data: LoginSchema) => {
+    if (data.email === 'a@gmail.com') {
+      localStorage.setItem('name', 'Admin');
+      localStorage.setItem('role', 'admin');
+    } else if (data.email === 'p@gmail.com') {
+      localStorage.setItem('name', 'Provider');
+      localStorage.setItem('role', 'provider');
+    } else {
+      localStorage.setItem('name', data.email);
+      localStorage.setItem('role', 'user');
+    }
+
+    const role = localStorage.getItem('role');
+    if (role === 'admin' || role === 'provider') {
+      router.push('/admin/dashboard');
+    } else router.push('/');
   };
 
   return (
@@ -76,6 +88,7 @@ function LoginForm() {
                     Password
                   </FieldLabel>
                   <Input
+                    type="password"
                     {...field}
                     id="login-form-password"
                     aria-invalid={fieldState.invalid}
