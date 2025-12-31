@@ -34,8 +34,6 @@ function Page() {
     console.log(value);
   };
 
-  // console.log(query.data);
-
   return (
     <div className="lg:py-8">
       <div className="min-h-screen container mx-auto px-4 ">
