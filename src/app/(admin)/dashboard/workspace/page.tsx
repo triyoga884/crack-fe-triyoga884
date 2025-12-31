@@ -8,7 +8,7 @@ function Page() {
   const query = useQuery({
     queryKey: ['rooms'],
     queryFn: async () => {
-      const response = await fetch('/dummy/room.json');
+      const response = await fetch('/dummy/roomnew.json');
       return response.json();
     },
   });

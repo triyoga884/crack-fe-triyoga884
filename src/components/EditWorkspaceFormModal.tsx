@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -16,7 +15,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { Controller, Resolver, useFieldArray, useForm } from 'react-hook-form';
 import { WorkspaceSchema, workspaceSchema } from '@/lib/schema';
 import { Room, RoomType } from '@/lib/type';
 import {
@@ -35,7 +34,7 @@ function EditWorkspaceFormModal({
   onClose?: () => void;
 }) {
   const form = useForm<WorkspaceSchema>({
-    resolver: zodResolver(workspaceSchema) as any,
+    resolver: zodResolver(workspaceSchema) as Resolver<WorkspaceSchema>,
     defaultValues: {
       name: payload?.name || '',
       capacity: payload?.capacity || 1,
@@ -240,7 +239,7 @@ function EditWorkspaceFormModal({
               {amenityFields.map((amenity, index) => (
                 <div key={amenity.id} className="flex gap-2">
                   <Input
-                    {...form.register(`amenities.${index}` as const)}
+                    {...form.register(`amenities.${index}.name` as const)}
                     placeholder="Amenity (e.g. WiFi)"
                   />
                   <Button
@@ -255,7 +254,7 @@ function EditWorkspaceFormModal({
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => appendAmenity('')}
+                onClick={() => appendAmenity({ name: 'WIFI' })}
               >
                 + Add amenity
               </Button>
@@ -270,7 +269,7 @@ function EditWorkspaceFormModal({
               {imageFields.map((image, index) => (
                 <div key={image.id} className="flex gap-2">
                   <Input
-                    {...form.register(`images.${index}` as const)}
+                    {...form.register(`images.${index}.url` as const)}
                     placeholder="https://example.com/image.jpg"
                   />
                   <Button
@@ -285,7 +284,7 @@ function EditWorkspaceFormModal({
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => appendImage('')}
+                onClick={() => appendImage({ url: '' })}
               >
                 + Add image
               </Button>

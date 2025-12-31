@@ -15,12 +15,12 @@ export interface Room {
   name: string;
   capacity: number;
   price_per_day: number;
-  amenities: string[];
+  amenities: { name: string }[];
   is_active: boolean;
   is_verified: boolean;
   room_type: RoomType;
   address: string;
-  images: string[];
+  images: { url: string }[];
   desc: string;
 }
 

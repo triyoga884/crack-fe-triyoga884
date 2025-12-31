@@ -48,6 +48,12 @@ export const columns: ColumnDef<Room>[] = [
   {
     accessorKey: 'amenities',
     header: 'Amenities',
+    cell: ({ row }) => {
+      const amenities = row.original.amenities
+        .map((amenity) => amenity.name)
+        .join(', ');
+      return <span>{amenities}</span>;
+    },
   },
   {
     accessorKey: 'address',

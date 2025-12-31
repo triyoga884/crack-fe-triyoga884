@@ -1,0 +1,251 @@
+[
+  {
+    "id": 1,
+    "name": "Ocean View Meeting Room",
+    "capacity": 8,
+    "price_per_day": 150,
+    "amenities": [
+      { "name": "Whiteboard" },
+      { "name": "TV Screen" },
+      { "name": "High-Speed WiFi" },
+      { "name": "Conference Phone" }
+    ],
+    "is_active": true,
+    "is_verified": true,
+    "room_type": "meeting room",
+    "address": "221 Beach Road, Santa Monica, CA 90401",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A bright meeting room overlooking the coastline, perfect for team discussions and presentations."
+  },
+  {
+    "id": 2,
+    "name": "Private Office Suite A",
+    "capacity": 3,
+    "price_per_day": 90,
+    "amenities": [
+      { "name": "Ergonomic Chairs" },
+      { "name": "Desk" },
+      { "name": "WiFi" },
+      { "name": "Air Conditioning" }
+    ],
+    "is_active": true,
+    "is_verified": false,
+    "room_type": "private office",
+    "address": "580 Market Street, San Francisco, CA 94104",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A quiet private office ideal for small teams, freelancers, or focused solo work."
+  },
+  {
+    "id": 3,
+    "name": "Podcast Studio Pro",
+    "capacity": 2,
+    "price_per_day": 250,
+    "amenities": [
+      { "name": "Microphones" },
+      { "name": "Soundproofing" },
+      { "name": "Mixer" },
+      { "name": "Recording Software" }
+    ],
+    "is_active": false,
+    "is_verified": true,
+    "room_type": "podcast studio",
+    "address": "34 Sunset Blvd, Los Angeles, CA 90026",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A fully equipped podcast studio with professional-grade audio gear and soundproof walls."
+  },
+  {
+    "id": 4,
+    "name": "Boardroom Deluxe",
+    "capacity": 12,
+    "price_per_day": 200,
+    "amenities": [
+      { "name": "Projector" },
+      { "name": "Speaker System" },
+      { "name": "Whiteboard" },
+      { "name": "WiFi" }
+    ],
+    "is_active": true,
+    "is_verified": true,
+    "room_type": "meeting room",
+    "address": "1000 Wilshire Blvd, Los Angeles, CA 90017",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A spacious boardroom designed for executive meetings, workshops, and strategy sessions."
+  },
+  {
+    "id": 5,
+    "name": "Small Team Office B",
+    "capacity": 4,
+    "price_per_day": 110,
+    "amenities": [
+      { "name": "Desks" },
+      { "name": "Chairs" },
+      { "name": "WiFi" },
+      { "name": "Air Conditioning" }
+    ],
+    "is_active": true,
+    "is_verified": false,
+    "room_type": "private office",
+    "address": "729 Mission Street, San Francisco, CA 94103",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A cozy workspace perfect for a small team needing privacy and reliable amenities."
+  },
+  {
+    "id": 6,
+    "name": "Creative Podcast Studio",
+    "capacity": 2,
+    "price_per_day": 180,
+    "amenities": [
+      { "name": "Microphones" },
+      { "name": "Headphones" },
+      { "name": "Soundproof Walls" },
+      { "name": "Audio Interface" }
+    ],
+    "is_active": true,
+    "is_verified": true,
+    "room_type": "podcast studio",
+    "address": "81 Melrose Ave, Los Angeles, CA 90029",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A modern and cozy studio ideal for podcast creators and small-scale audio production."
+  },
+  {
+    "id": 7,
+    "name": "Executive Meeting Hub",
+    "capacity": 10,
+    "price_per_day": 195,
+    "amenities": [
+      { "name": "Smart TV" },
+      { "name": "Conference Phone" },
+      { "name": "WiFi" },
+      { "name": "Mini Fridge" }
+    ],
+    "is_active": false,
+    "is_verified": false,
+    "room_type": "meeting room",
+    "address": "241 Madison Ave, New York, NY 10016",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "An upscale meeting space equipped for high-level discussions and executive collaboration."
+  },
+  {
+    "id": 8,
+    "name": "Solo Office C",
+    "capacity": 1,
+    "price_per_day": 70,
+    "amenities": [
+      { "name": "Desk" },
+      { "name": "Office Chair" },
+      { "name": "WiFi" }
+    ],
+    "is_active": true,
+    "is_verified": true,
+    "room_type": "private office",
+    "address": "210 Broadway, New York, NY 10007",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A compact private office designed for focused individual work or remote meetings."
+  },
+  {
+    "id": 9,
+    "name": "Premium Team Office D",
+    "capacity": 5,
+    "price_per_day": 130,
+    "amenities": [
+      { "name": "Standing Desks" },
+      { "name": "WiFi" },
+      { "name": "Air Conditioning" },
+      { "name": "Lockers" }
+    ],
+    "is_active": true,
+    "is_verified": false,
+    "room_type": "private office",
+    "address": "55 W 39th St, New York, NY 10018",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A well-equipped office tailored for productive team collaboration with modern furnishings."
+  },
+  {
+    "id": 10,
+    "name": "Startup Collaboration Room",
+    "capacity": 6,
+    "price_per_day": 160,
+    "amenities": [
+      { "name": "TV Screen" },
+      { "name": "Whiteboard" },
+      { "name": "WiFi" }
+    ],
+    "is_active": true,
+    "is_verified": true,
+    "room_type": "meeting room",
+    "address": "500 Tech Way, Austin, TX 78701",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A versatile meeting room designed for brainstorming, presentations, and agile teamwork."
+  },
+  {
+    "id": 11,
+    "name": "Audio Pro Studio",
+    "capacity": 2,
+    "price_per_day": 280,
+    "amenities": [
+      { "name": "Professional Microphones" },
+      { "name": "Acoustic Panels" },
+      { "name": "Mixer" },
+      { "name": "Editing PC" }
+    ],
+    "is_active": true,
+    "is_verified": false,
+    "room_type": "podcast studio",
+    "address": "1900 Sound Ave, Nashville, TN 37203",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A professional-grade recording studio perfect for podcasters, voice actors, and audio producers."
+  },
+  {
+    "id": 12,
+    "name": "Focus Office E",
+    "capacity": 2,
+    "price_per_day": 85,
+    "amenities": [
+      { "name": "Desk" },
+      { "name": "WiFi" },
+      { "name": "Ergonomic Chair" }
+    ],
+    "is_active": false,
+    "is_verified": true,
+    "room_type": "private office",
+    "address": "100 Congress Ave, Austin, TX 78701",
+    "images": [
+      { "url": "https://placehold.co/600x400" },
+      { "url": "https://placehold.co/600x400" }
+    ],
+    "desc": "A simple and calm workspace designed for focused work and uninterrupted productivity."
+  }
+]
