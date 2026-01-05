@@ -36,12 +36,6 @@ export const columns: ColumnDef<Room>[] = [
   {
     accessorKey: 'amenities',
     header: 'Amenities',
-    cell: ({ row }) => {
-      const amenities = row.original.amenities
-        .map((amenity) => amenity.name)
-        .join(', ');
-      return <span>{amenities}</span>;
-    },
   },
   {
     accessorKey: 'address',
@@ -57,9 +51,11 @@ export const columns: ColumnDef<Room>[] = [
 
       const handleApprove = () => {
         alert(workspace.id);
+        setModalApproveOpen(false);
       };
       const handleDelete = () => {
         alert(workspace.id);
+        setModalDeleteOpen(false);
       };
 
       return (

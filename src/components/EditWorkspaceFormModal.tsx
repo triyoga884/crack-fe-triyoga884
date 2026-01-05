@@ -16,7 +16,11 @@ import {
 } from '@/components/ui/field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, Resolver, useFieldArray, useForm } from 'react-hook-form';
-import { WorkspaceSchema, workspaceSchema } from '@/lib/schema';
+import {
+  workspaceFormToApiSchema,
+  WorkspaceFormSchema,
+  workspaceFormSchema,
+} from '@/lib/schema';
 import { Room, RoomType } from '@/lib/type';
 import {
   Select,
@@ -33,8 +37,8 @@ function EditWorkspaceFormModal({
   payload: Room | null;
   onClose?: () => void;
 }) {
-  const form = useForm<WorkspaceSchema>({
-    resolver: zodResolver(workspaceSchema) as Resolver<WorkspaceSchema>,
+  const form = useForm<WorkspaceFormSchema>({
+    resolver: zodResolver(workspaceFormSchema) as Resolver<WorkspaceFormSchema>,
     defaultValues: {
       name: payload?.name || '',
       capacity: payload?.capacity || 1,
@@ -73,8 +77,9 @@ function EditWorkspaceFormModal({
     name: 'images',
   });
 
-  const onSubmit = (data: WorkspaceSchema) => {
-    console.log('Submitting data:', data);
+  const onSubmit = (data: WorkspaceFormSchema) => {
+    const updatedWorkspace = workspaceFormToApiSchema.parse(data);
+    console.log('Updated Workspace Data:', updatedWorkspace);
     onClose?.();
   };
 

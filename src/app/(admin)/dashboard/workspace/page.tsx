@@ -1,18 +1,18 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import { DataTable } from '@/components/ui/data-table';
 import { columns } from './columns';
+import { apiToWorkspaceFormSchema } from '@/lib/schema';
 
 function Page() {
   const query = useQuery({
     queryKey: ['rooms'],
     queryFn: async () => {
-      const response = await fetch('/dummy/roomnew.json');
-      return response.json();
+      const response = await fetch('/dummy/room.json');
+      const data = await response.json();
+      return data.map((room: any) => apiToWorkspaceFormSchema.parse(room));
     },
   });
-
   return (
     <div>
       {query.isLoading && <div>Loading...</div>}
