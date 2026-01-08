@@ -13,7 +13,7 @@ function Page() {
     },
   });
 
-  console.log(query.data);
+  // console.log(query.data);
   return (
     <div>
       {query.isLoading && <div>Loading...</div>}

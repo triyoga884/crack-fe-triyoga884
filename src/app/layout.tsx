@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={`antialiased`}>{children}</body>
-      </html>
-    </Providers>
+    <html lang="en">
+      <body className="antialiased">
+        <Providers>{children}</Providers>
+      </body>
+    </html>
   );
 }

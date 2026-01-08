@@ -8,7 +8,7 @@ import { WorkspaceTab } from '@/lib/type';
 
 function Service() {
   const data: WorkspaceTab[] = require('@/assets/data/WorkspaceTab.json');
-  console.log(data[0]);
+  // console.log(data[0]);
   return (
     <div className="tab-workspace container mx-auto bg-card p-6 rounded-xl my-8 min-h-[400px]">
       <Tabs defaultValue={data[0].value}>

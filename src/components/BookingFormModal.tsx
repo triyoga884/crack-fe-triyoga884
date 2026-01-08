@@ -30,6 +30,7 @@ import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
 import { BookingSchema, bookingSchema } from '@/lib/schema';
+import { addDays } from 'date-fns';
 
 function BookingFormModal({ data }: any) {
   console.log(data);
@@ -45,6 +46,23 @@ function BookingFormModal({ data }: any) {
       endDate: undefined,
     },
   });
+
+  const blockedRanges = [
+    {
+      startTime: '2026-01-03T00:00:00.000Z',
+      endTime: '2026-01-05T00:00:00.000Z',
+    },
+    {
+      startTime: '2026-01-07T00:00:00.000Z',
+      endTime: '2026-01-11T00:00:00.000Z',
+    },
+  ];
+
+  const disabledRanges = blockedRanges.map((range) => ({
+    from: new Date(range.startTime),
+    // DayPicker is inclusive → make sure end date is included
+    to: addDays(new Date(range.endTime), -1),
+  }));
 
   const onSubmit = (data: BookingSchema) => {
     console.log(data);
@@ -172,6 +190,7 @@ function BookingFormModal({ data }: any) {
                           field.onChange(date);
                           setCalendarStartOpen(false);
                         }}
+                        disabled={disabledRanges}
                       />
                     </PopoverContent>
                   </Popover>

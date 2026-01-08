@@ -1,3 +1,4 @@
+'use client';
 import DashboardCard from '@/components/DashboardCard';
 import { Card } from '@/components/ui/card';
 import React from 'react';
@@ -21,6 +22,7 @@ function Page() {
       value: 15,
     },
   ];
+
   return (
     <div>
       {/* dashboard content */}

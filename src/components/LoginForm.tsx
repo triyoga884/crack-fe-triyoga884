@@ -1,8 +1,6 @@
 'use client';
-import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -22,33 +20,21 @@ import {
 import Link from 'next/link';
 import { LoginSchema, loginSchema } from '@/lib/schema';
 import { useRouter } from 'next/navigation';
+import { useLogin } from '../auth/mutations';
 
 function LoginForm() {
   const router = useRouter();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema) as any,
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'user1@example.com',
+      password: 'password123',
     },
   });
+  const { mutate: login, isPending, error } = useLogin();
 
-  const onSubmit = (data: LoginSchema) => {
-    if (data.email === 'a@gmail.com') {
-      localStorage.setItem('name', 'Admin');
-      localStorage.setItem('role', 'admin');
-    } else if (data.email === 'p@gmail.com') {
-      localStorage.setItem('name', 'Provider');
-      localStorage.setItem('role', 'provider');
-    } else {
-      localStorage.setItem('name', data.email);
-      localStorage.setItem('role', 'user');
-    }
-
-    const role = localStorage.getItem('role');
-    if (role === 'admin' || role === 'provider') {
-      router.push('/admin/dashboard');
-    } else router.push('/');
+  const onSubmit = async (data: LoginSchema) => {
+    login(data, { onSuccess: () => router.push('/') });
   };
 
   return (

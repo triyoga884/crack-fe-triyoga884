@@ -12,6 +12,7 @@ import {
   SheetFooter,
 } from '@/components/ui/sheet';
 import Hamburger from 'hamburger-react';
+import { useAuth } from '../hooks/useAuth';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,8 @@ function Navbar() {
   const closeSheet = () => {
     setIsOpen(false);
   };
+
+  const { isAuthenticated } = useAuth();
 
   const menu = (
     <>
@@ -29,9 +32,19 @@ function Navbar() {
         <Link className=" font-medium" onClick={closeSheet} href="/workspaces">
           Workspaces
         </Link>
-        <Link className=" font-medium" onClick={closeSheet} href="/login">
-          Login
+        <Link className=" font-medium" onClick={closeSheet} href="/dashboard">
+          Admin
         </Link>
+        {!isAuthenticated && (
+          <Link className=" font-medium" onClick={closeSheet} href="/login">
+            Login
+          </Link>
+        )}
+        {isAuthenticated && (
+          <Link className=" font-medium" onClick={closeSheet} href="/profile">
+            Profile
+          </Link>
+        )}
       </nav>
     </>
   );
@@ -53,11 +66,21 @@ function Navbar() {
             <Link href="/workspaces" className="text-sm font-medium">
               Workspaces
             </Link>
+            <Link href="/dashboard" className="text-sm font-medium">
+              Admin
+            </Link>
           </nav>
           <div className="hidden md:block">
-            <Button>
-              <Link href="/login">Login</Link>
-            </Button>
+            {!isAuthenticated && (
+              <Button>
+                <Link href="/login">Login</Link>
+              </Button>
+            )}
+            {isAuthenticated && (
+              <Button>
+                <Link href="/profile">Profile</Link>
+              </Button>
+            )}
           </div>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
