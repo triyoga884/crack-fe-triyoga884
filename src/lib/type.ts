@@ -13,15 +13,16 @@ export enum UserRoles {
 export interface Room {
   id: number;
   name: string;
-  capacity: number;
-  price_per_day: number;
-  amenities: { name: string }[];
-  is_active: boolean;
-  is_verified: boolean;
-  room_type: RoomType;
   address: string;
-  images: { url: string }[];
-  desc: string;
+  description: string;
+  amenities: string[];
+  pricePerDay: number;
+  type: RoomType;
+  isActive: boolean;
+  isVerified: boolean;
+  images: string[];
+
+  // capacity: number;
 }
 
 export type WorkspaceTab = {

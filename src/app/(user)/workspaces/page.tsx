@@ -1,5 +1,4 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Room } from '@/lib/type';
 import {
@@ -13,15 +12,12 @@ import {
 } from '@/components/ui/pagination';
 import RoomCard from '@/components/RoomCard';
 import SearchBar from '@/components/SearchBar';
+import { useAllVerifiedWorkspaces } from './_api/queries';
+import { Skeleton } from '../../../components/ui/skeleton';
 
 function Page() {
-  const { data } = useQuery({
-    queryKey: ['rooms'],
-    queryFn: async () => {
-      const response = await fetch('/dummy/room.json');
-      return response.json();
-    },
-  });
+  const { data, isPending, error } = useAllVerifiedWorkspaces();
+  console.log(data);
 
   const [search, setSearch] = React.useState('');
 
@@ -44,10 +40,28 @@ function Page() {
           handleCategoryChange={handleCategoryChange}
         />
         <div className="workspaces-list grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4 place-items-stretch">
-          {data?.map((e: Room) => (
-            <RoomCard key={`room-${e.id}`} {...e} />
-          ))}
+          {isPending ? (
+            Array.from({ length: 12 }).map((_, idx) => (
+              <div className="space-y-2" key={idx}>
+                <Skeleton className="h-[300px]" />
+                <div className="flex flex-col gap-2 md:gap-4 ">
+                  <Skeleton className="h-4 md:w-[80%]" />
+                  <Skeleton className="h-4 md:w-[50%]" />
+                  <Skeleton className="h-4 md:w-[80%]" />
+                  <Skeleton className="h-4" />
+                  <Skeleton className="h-10 w-[20%]" />
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              {data?.map((e: Room) => (
+                <RoomCard key={`room-${e.id}`} {...e} />
+              ))}
+            </>
+          )}
         </div>
+
         <Pagination className="mt-8">
           <PaginationContent>
             <PaginationItem>

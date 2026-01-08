@@ -7,10 +7,10 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <>
       <Navbar />
       <body className={`antialiased`}>{children}</body>
       <Footer />
-    </html>
+    </>
   );
 }

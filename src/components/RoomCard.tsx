@@ -17,24 +17,21 @@ function RoomCard(e: Room) {
     <Card key={`room-${e.id}`} className="justify-between">
       <CardHeader>
         <Image
-          src={e.images[0].url}
+          src={e.images[0]}
           alt={e.name}
           width={400}
           height={300}
           unoptimized
+          className="rounded-2xl"
         />
       </CardHeader>
       <CardContent className="space-y-2">
         <CardTitle>{e.name}</CardTitle>
         <CardDescription>{e.address}</CardDescription>
-        <div className="flex justify-between">
-          <div>
-            <p>{e.capacity} people</p>
-            <p>{e.room_type}</p>
-          </div>
-          <div>
-            <p>{e.price_per_day}/day</p>
-          </div>
+        <div>
+          <p>{e.type}</p>
+          <p>{e.pricePerDay}/day</p>
+          <p>{e.description} people</p>
         </div>
       </CardContent>
       <CardFooter className="flex-row-reverse">

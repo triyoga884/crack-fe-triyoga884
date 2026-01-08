@@ -1,4 +1,3 @@
-// src/features/auth/api.ts
 import {
   authFetch,
   setAccessToken,
@@ -6,7 +5,7 @@ import {
   getAccessToken,
 } from '@/lib/fetcher';
 
-const API = 'http://localhost:3001/auth';
+const API = `${process.env.NEXT_PUBLIC_LOCAL_API}/auth`;
 
 export async function login(email: string, password: string) {
   const res = await fetch(`${API}/login`, {
