@@ -2,10 +2,7 @@ import * as z from 'zod';
 import { RoomType, UserRoles } from './type';
 
 export const bookingSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.email('Invalid email address'),
-  contact: z.string().min(10, 'Contact number is required'),
-  companyName: z.string().optional(),
+  workspaceId: z.string(),
   startDate: z.date(),
   endDate: z.date(),
 });

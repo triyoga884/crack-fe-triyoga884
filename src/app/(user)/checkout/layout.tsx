@@ -4,7 +4,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export function AuthGuard({ children }: { children: React.ReactNode }) {
+export default function UserProtectedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 

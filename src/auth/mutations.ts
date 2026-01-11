@@ -1,9 +1,9 @@
 // src/features/auth/mutations.ts
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login, logout } from './api';
-import { queryClient } from '../lib/queryClient';
 
 export function useLogin() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       login(email, password),
@@ -14,6 +14,7 @@ export function useLogin() {
 }
 
 export function useLogout() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {

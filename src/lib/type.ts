@@ -40,3 +40,9 @@ export type User = {
   password: string;
   role: UserRoles;
 };
+
+export type Booking = {
+  workspaceId: string;
+  startDate: string;
+  endDate: string;
+};

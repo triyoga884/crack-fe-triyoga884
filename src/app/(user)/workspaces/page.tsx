@@ -12,12 +12,11 @@ import {
 } from '@/components/ui/pagination';
 import RoomCard from '@/components/RoomCard';
 import SearchBar from '@/components/SearchBar';
-import { useAllVerifiedWorkspaces } from './_api/queries';
+import { useAllVerifiedWorkspaces } from '../_api/queries';
 import { Skeleton } from '../../../components/ui/skeleton';
 
 function Page() {
   const { data, isPending, error } = useAllVerifiedWorkspaces();
-  console.log(data);
 
   const [search, setSearch] = React.useState('');
 

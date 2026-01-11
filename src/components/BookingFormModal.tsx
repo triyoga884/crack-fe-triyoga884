@@ -8,76 +8,80 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from '@/components/ui/field';
+import { Field, FieldError, FieldGroup } from '@/components/ui/field';
 import { ChevronDownIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { useRouter } from 'next/navigation';
 import { BookingSchema, bookingSchema } from '@/lib/schema';
-import { addDays } from 'date-fns';
+import { useDateAvailable } from '../app/(user)/_api/queries';
+import { useBooking } from '../app/(user)/_api/mutations';
+import { isWithinInterval, startOfDay } from 'date-fns';
+import { dateOnly } from '../lib/datesFormatter';
 
-function BookingFormModal({ data }: any) {
-  console.log(data);
+interface Prop {
+  workspace: any;
+  modalOpen: boolean;
+  setModalOpen: any;
+}
+
+function BookingFormModal({ workspace, modalOpen, setModalOpen }: Prop) {
   const router = useRouter();
+  const { data: date } = useDateAvailable(workspace.id);
+  const { mutate: postBooking } = useBooking();
+
+  const disabledRanges = date ? date : [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const isUnavailable = (date: Date) => {
+    const normalized = startOfDay(date);
+    return disabledRanges?.some((range: any) => {
+      const start = startOfDay(new Date(range.startDate));
+      const end = startOfDay(new Date(range.endDate));
+      return isWithinInterval(normalized, { start, end });
+    });
+  };
+
   const form = useForm<BookingSchema>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      contact: '',
-      companyName: '',
+      workspaceId: workspace.id,
       startDate: undefined,
       endDate: undefined,
     },
   });
 
-  const blockedRanges = [
-    {
-      startTime: '2026-01-03T00:00:00.000Z',
-      endTime: '2026-01-05T00:00:00.000Z',
-    },
-    {
-      startTime: '2026-01-07T00:00:00.000Z',
-      endTime: '2026-01-11T00:00:00.000Z',
-    },
-  ];
-
-  const disabledRanges = blockedRanges.map((range) => ({
-    from: new Date(range.startTime),
-    // DayPicker is inclusive → make sure end date is included
-    to: addDays(new Date(range.endTime), -1),
-  }));
-
   const onSubmit = (data: BookingSchema) => {
-    console.log(data);
-    router.push('/checkout');
+    const formatData = {
+      workspaceId: data.workspaceId,
+      startDate: dateOnly(data.startDate),
+      endDate: dateOnly(data.endDate),
+    };
+    console.log(formatData);
+    postBooking(formatData, {
+      onSuccess: (response) => {
+        const id = response.id;
+        console.log(id);
+        router.push(`/checkout/${id}`);
+      },
+    });
   };
 
   const [calenderStartOpen, setCalendarStartOpen] = useState(false);
   const [calenderEndOpen, setCalendarEndOpen] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <form id="booking-form" onSubmit={form.handleSubmit(onSubmit)}>
-        <DialogTrigger asChild>
-          <Button>Book Now</Button>
-        </DialogTrigger>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Booking Form</DialogTitle>
@@ -87,98 +91,24 @@ function BookingFormModal({ data }: any) {
           </DialogHeader>
           <FieldGroup className="grid md:grid-cols-2 gap-4">
             <Controller
-              name="name"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor="name">Name</FieldLabel>
-                  <Input
-                    id="name"
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="email"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor="email">Email</FieldLabel>
-                  <Input
-                    id="email"
-                    type="email"
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="contact"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor="contact">Contact</FieldLabel>
-                  <Input
-                    id="contact"
-                    type="contact"
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="companyName"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor="companyName">Company Name</FieldLabel>
-                  <Input
-                    id="companyName"
-                    type="companyName"
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
               name="startDate"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <Label htmlFor="date">Start Date</Label>
+                  <Label>Start Date</Label>
                   <Popover
                     open={calenderStartOpen}
                     onOpenChange={setCalendarStartOpen}
                   >
                     <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        id="date"
-                        className="justify-between"
-                      >
+                      <Button variant="outline" className="justify-between">
                         {field.value
                           ? new Date(field.value).toLocaleDateString()
                           : 'Select date'}
                         <ChevronDownIcon />
                       </Button>
                     </PopoverTrigger>
+
                     <PopoverContent>
                       <Calendar
                         mode="single"
@@ -190,57 +120,65 @@ function BookingFormModal({ data }: any) {
                           field.onChange(date);
                           setCalendarStartOpen(false);
                         }}
-                        disabled={disabledRanges}
+                        disabled={(date) => date < today || isUnavailable(date)}
                       />
                     </PopoverContent>
                   </Popover>
+
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
               )}
             />
+
             <Controller
               name="endDate"
               control={form.control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <Label htmlFor="date">End Date</Label>
-                  <Popover
-                    open={calenderEndOpen}
-                    onOpenChange={setCalendarEndOpen}
-                  >
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        id="date"
-                        className="justify-between"
-                      >
-                        {field.value
-                          ? new Date(field.value).toLocaleDateString()
-                          : 'Select date'}
-                        <ChevronDownIcon />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <Calendar
-                        mode="single"
-                        selected={
-                          field.value ? new Date(field.value) : undefined
-                        }
-                        captionLayout="dropdown"
-                        onSelect={(date) => {
-                          field.onChange(date);
-                          setCalendarEndOpen(false);
-                        }}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
+              render={({ field, fieldState }) => {
+                const startDate = form.watch('startDate');
+                return (
+                  <Field>
+                    <Label>End Date</Label>
+                    <Popover
+                      open={calenderEndOpen}
+                      onOpenChange={setCalendarEndOpen}
+                    >
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="justify-between">
+                          {field.value
+                            ? new Date(field.value).toLocaleDateString()
+                            : 'Select date'}
+                          <ChevronDownIcon />
+                        </Button>
+                      </PopoverTrigger>
+
+                      <PopoverContent>
+                        <Calendar
+                          mode="single"
+                          selected={
+                            field.value ? new Date(field.value) : undefined
+                          }
+                          captionLayout="dropdown"
+                          onSelect={(date) => {
+                            field.onChange(date);
+                            setCalendarEndOpen(false);
+                          }}
+                          disabled={(date) =>
+                            date < today ||
+                            (startDate && date < new Date(startDate)) ||
+                            isUnavailable(date)
+                          }
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                );
+              }}
             />
           </FieldGroup>
           <DialogFooter>
@@ -248,7 +186,7 @@ function BookingFormModal({ data }: any) {
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <Button type="submit" form="booking-form">
-              Save changes
+              Confirm
             </Button>
           </DialogFooter>
         </DialogContent>

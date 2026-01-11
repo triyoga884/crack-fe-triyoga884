@@ -8,12 +8,26 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import BookingFormModal from '@/components/BookingFormModal';
-import { useWorkspaceById } from '../_api/queries';
-import { useParams } from 'next/navigation';
+import { useWorkspaceById } from '../../_api/queries';
+import { useParams, useRouter } from 'next/navigation';
+import { Button } from '../../../../components/ui/button';
+import { useState } from 'react';
+import { useAuth } from '../../../../hooks/useAuth';
 
 function Page() {
   const { id } = useParams();
   const { data, isPending, error } = useWorkspaceById(id as string);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  const handleModal = () => {
+    if (isAuthenticated) {
+      setModalOpen(true);
+    } else {
+      router.push('/login');
+    }
+  };
 
   return (
     <div className="container mx-auto">
@@ -75,7 +89,12 @@ function Page() {
             </div>
             <Separator />
             {/* dialog booking workspace */}
-            <BookingFormModal data={data!} />
+            <Button onClick={handleModal}>Book Now</Button>
+            <BookingFormModal
+              workspace={data!}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+            />
           </div>
         </div>
       )}
