@@ -1,12 +1,12 @@
 import { getAccessToken } from '../../../lib/fetcher';
-import { Booking } from '../../../lib/type';
+import { Booking, Payment } from '../../../lib/type';
 
 const API = process.env.NEXT_PUBLIC_LOCAL_API;
-const token = getAccessToken();
-const headers = {
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${token}`,
-};
+// const token = getAccessToken();
+// const headers = {
+//   'Content-Type': 'application/json',
+//   Authorization: `Bearer ${token}`,
+// };
 
 // WORKSPACE
 export async function getAllVerifiedWorkspaces() {
@@ -36,17 +36,42 @@ export async function postBooking(booking: Booking) {
   });
   const res = await fetch(`${API}/booking`, {
     method: 'POST',
-    headers: headers,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
     body: e,
   });
   const data = await res.json();
   return data;
 }
 
-export async function getBookingById(id: string) {
-  const res = await fetch(`${API}/booking/${id}`, {
-    headers: headers,
+export async function getChekoutData(id: string) {
+  const res = await fetch(`${API}/booking/checkout/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
   });
   const data = await res.json();
+  return data;
+}
+
+// PAYMENT
+
+export async function postPayment(payment: Payment) {
+  const e = JSON.stringify({
+    bookingId: payment.bookingId,
+    method: payment.method,
+  });
+  const res = await fetch(`${API}/payments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+    body: e,
+  });
+  const data = res.json();
   return data;
 }

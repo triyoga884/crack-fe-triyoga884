@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   getAllVerifiedWorkspaces,
   getAvailableDates,
-  getBookingById,
+  getChekoutData,
   getWorkspaceById,
 } from './api';
 
@@ -30,10 +30,10 @@ export function useDateAvailable(id: string) {
   });
 }
 
-export function useBookingById(id: string) {
+export function useCheckout(id: string) {
   return useQuery({
     queryKey: ['booking', id],
-    queryFn: () => getBookingById(id),
+    queryFn: () => getChekoutData(id),
     enabled: !!id,
   });
 }

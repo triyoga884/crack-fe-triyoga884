@@ -11,30 +11,44 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { Calendar, MapPin } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
-import { useBookingById, useWorkspaceById } from '../../_api/queries';
-import { useParams } from 'next/navigation';
+import { useCheckout } from '../../_api/queries';
+import { useParams, useRouter } from 'next/navigation';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { dateOnly } from '../../../../lib/datesFormatter';
+import { usePayment } from '../../_api/mutations';
+import { Payment } from '../../../../lib/type';
 
 function Page() {
   const { id } = useParams();
-  const { data: booking, isPending, error } = useBookingById(id as string);
+  const { data: booking, isPending, error } = useCheckout(id as string);
   console.log(booking);
-  const { data: workspace } = useWorkspaceById(booking.coworkingSpaceId);
+  // const { data: workspace, isPending: workspaceLoading } = useWorkspaceById(
+  //   booking?.coworkingSpaceId, {
+  //     enabled:
+  //   }
+  // );
+  const { mutate: postPayment } = usePayment();
+  const router = useRouter();
+
   // const workspace = {
   //   name: 'tes',
   //   description: 'tes',
   //   address: 'tes',
   // };
+  // const workspaceLoading = false;
 
   const form = useForm({
     defaultValues: {
-      paymentMethod: 'option-one',
+      method: '',
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (data: { method: string }) => {
+    const req = { method: data.method, bookingId: booking.id };
+    console.log(req);
+    postPayment(req, {
+      onSuccess: () => router.push('/'),
+    });
   };
 
   return (
@@ -59,8 +73,10 @@ function Page() {
             <h1 className="font-bold text-2xl">Checkout</h1>
             <Card>
               <CardHeader>
-                <CardTitle>{workspace.name}</CardTitle>
-                <CardDescription>{workspace.description}</CardDescription>
+                <CardTitle>{booking.coworkingSpace.name}</CardTitle>
+                <CardDescription>
+                  {booking.coworkingSpace.description}
+                </CardDescription>
               </CardHeader>
               <CardContent className="font-medium text-sm flex flex-col gap-4">
                 <div className="flex gap-2 items-center">
@@ -70,7 +86,7 @@ function Page() {
                   )}`}</p>
                 </div>
                 <div className="flex gap-2 items-center">
-                  <MapPin /> <p>{workspace.address}</p>
+                  <MapPin /> <p>{booking.coworkingSpace.address}</p>
                 </div>
               </CardContent>
             </Card>
@@ -97,7 +113,7 @@ function Page() {
               <h2 className="text-xl font-semibold">Payment Method</h2>
               <form id="payment-method" onSubmit={form.handleSubmit(onSubmit)}>
                 <Controller
-                  name="paymentMethod"
+                  name="method"
                   control={form.control}
                   render={({ field }) => (
                     <RadioGroup
@@ -107,12 +123,12 @@ function Page() {
                     >
                       <div className="flex items-center gap-2 justify-between border-b pb-2 mb-2">
                         <label htmlFor="credit">Credit Card</label>
-                        <RadioGroupItem value="credit" id="credit" />
+                        <RadioGroupItem value="CREDIT_CARD" id="credit" />
                       </div>
 
                       <div className="flex items-center gap-2 justify-between border-b pb-2 mb-2">
-                        <label htmlFor="paypal">PayPal</label>
-                        <RadioGroupItem value="paypal" id="paypal" />
+                        <label htmlFor="transfer">Transfer</label>
+                        <RadioGroupItem value="TRANSFER" id="transfer" />
                       </div>
                     </RadioGroup>
                   )}

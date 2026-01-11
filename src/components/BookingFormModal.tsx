@@ -70,7 +70,6 @@ function BookingFormModal({ workspace, modalOpen, setModalOpen }: Prop) {
     postBooking(formatData, {
       onSuccess: (response) => {
         const id = response.id;
-        console.log(id);
         router.push(`/checkout/${id}`);
       },
     });

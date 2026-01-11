@@ -46,3 +46,8 @@ export type Booking = {
   startDate: string;
   endDate: string;
 };
+
+export type Payment = {
+  bookingId: string;
+  method: string;
+};

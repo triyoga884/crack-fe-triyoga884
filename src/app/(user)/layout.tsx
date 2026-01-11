@@ -9,7 +9,7 @@ export default function UserLayout({
   return (
     <>
       <Navbar />
-      <body className={`antialiased`}>{children}</body>
+      {children}
       <Footer />
     </>
   );
