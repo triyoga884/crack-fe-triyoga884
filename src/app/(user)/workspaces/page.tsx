@@ -14,9 +14,13 @@ import RoomCard from '@/components/RoomCard';
 import SearchBar from '@/components/SearchBar';
 import { useAllVerifiedWorkspaces } from '../_api/queries';
 import { Skeleton } from '../../../components/ui/skeleton';
+import { useAuth } from '../../../hooks/useAuth';
 
 function Page() {
   const { data, isPending, error } = useAllVerifiedWorkspaces();
+
+  const { user } = useAuth();
+  console.log(user);
 
   const [search, setSearch] = React.useState('');
 

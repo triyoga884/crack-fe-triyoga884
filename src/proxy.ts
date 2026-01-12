@@ -7,10 +7,6 @@ const PROTECTED_PAGES = ['/dashboard', '/checkout', '/profile'];
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname === '/logout') {
-    return NextResponse.next();
-  }
-
   const hasRefreshToken = req.cookies.has('refresh_token');
 
   // 🔒 Logged-in users should NOT access login/register

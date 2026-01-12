@@ -1,7 +1,7 @@
 export enum RoomType {
-  MEETING_ROOM = 'meeting room',
-  PRIVATE_OFFICE = 'private office',
-  PODCAST_STUDIO = 'podcast studio',
+  MEETING_ROOM = 'MEETING_ROOM',
+  PRIVATE_OFFICE = 'PRIVATE_OFFICE',
+  PODCAST_STUDIO = 'PODCAST_STUDIO',
 }
 
 export enum UserRoles {
@@ -11,18 +11,17 @@ export enum UserRoles {
 }
 
 export interface Room {
-  id: number;
+  id: string;
   name: string;
   address: string;
   description: string;
-  amenities: string[];
+  amenities: { name: string }[];
   pricePerDay: number;
   type: RoomType;
+  capacity: number;
   isActive: boolean;
   isVerified: boolean;
-  images: string[];
-
-  // capacity: number;
+  images: { url: string }[];
 }
 
 export type WorkspaceTab = {

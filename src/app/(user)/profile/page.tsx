@@ -12,7 +12,9 @@ export default function Profile() {
   return (
     <div>
       <h1>Profile</h1>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button variant="destructive" onClick={handleLogout}>
+        Logout
+      </Button>
     </div>
   );
 }

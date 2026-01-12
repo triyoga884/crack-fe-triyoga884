@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +25,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { useAuth } from '../hooks/useAuth';
+import { useLogout } from '../auth/mutations';
+import { redirect, useRouter } from 'next/navigation';
 
 const items = [
   {
@@ -48,9 +50,35 @@ const items = [
     url: '/dashboard/approvals',
     icon: CheckLine,
   },
+  {
+    title: 'Booking',
+    url: '/dashboard/bookings',
+    icon: Briefcase,
+  },
 ];
 
+const filteredItems = items.filter(
+  (ele) => ele.title !== 'Users' && ele.title !== 'Approvals'
+);
+
 function AdminSidebar() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  const { mutate: logout, isPending, error } = useLogout();
+
+  let itemsFix = items;
+
+  if (user?.role === 'PROVIDER') {
+    itemsFix = filteredItems;
+  } else itemsFix = items;
+
+  const handleLogout = () => {
+    logout(undefined, { onSuccess: () => router.push('/login') });
+  };
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
   return (
     <Sidebar>
       <SidebarHeader />
@@ -59,7 +87,7 @@ function AdminSidebar() {
           <SidebarGroupLabel>Admin Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {itemsFix.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
@@ -78,18 +106,21 @@ function AdminSidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 /> Username
+                <SidebarMenuButton className="cursor-pointer">
+                  <User2 /> {user ? user.email : 'User Email'}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-60">
-                <DropdownMenuItem>
-                  <span>Account</span>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Link className="w-full" href="/profile">
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
-
-                <DropdownMenuItem>
-                  <span>Sign out</span>
+                <DropdownMenuItem className="cursor-pointer">
+                  <span className="w-full" onClick={handleLogout}>
+                    Sign out
+                  </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

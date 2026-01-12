@@ -17,9 +17,9 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, Resolver, useFieldArray, useForm } from 'react-hook-form';
 import {
-  workspaceUpdateFormToApiSchema,
-  WorkspaceUpdateFormSchema,
-  workspaceUpdateFormSchema,
+  workspaceCreateFormSchema,
+  WorkspaceCreateFormSchema,
+  workspaceCreateToApiSchema,
 } from '@/lib/schema';
 import { Room, RoomType } from '@/lib/type';
 import {
@@ -30,37 +30,28 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useAuth } from '../hooks/useAuth';
-import { useUpdateWorkspace } from '../app/(admin)/_api/mutation';
+import { useCreateWorkspace } from '../app/(admin)/_api/mutation';
 
-function EditWorkspaceFormModal({
-  payload,
-  onClose,
-}: {
-  payload: Room | null;
-  onClose?: () => void;
-}) {
-  const form = useForm<WorkspaceUpdateFormSchema>({
+function CreateWorkspaceFormModal({ onClose }: { onClose: () => void }) {
+  const form = useForm<WorkspaceCreateFormSchema>({
     resolver: zodResolver(
-      workspaceUpdateFormSchema
-    ) as Resolver<WorkspaceUpdateFormSchema>,
+      workspaceCreateFormSchema
+    ) as Resolver<WorkspaceCreateFormSchema>,
     defaultValues: {
-      id: payload?.id,
-      name: payload?.name || '',
-      capacity: payload?.capacity || 1,
-      amenities: payload?.amenities || [],
-      pricePerDay: payload?.pricePerDay || 1,
-      type: payload?.type,
-      address: payload?.address || '',
-      images: payload?.images || [],
-      description: payload?.description || '',
-      isActive: payload?.isActive || false,
-      isVerified: payload?.isVerified || false,
+      name: '',
+      capacity: 1,
+      amenities: [],
+      pricePerDay: 1,
+      type: undefined,
+      address: '',
+      images: [],
+      description: '',
     },
   });
 
   const { user } = useAuth();
 
-  const { mutate: update } = useUpdateWorkspace(user.userId);
+  const { mutate: create } = useCreateWorkspace(user.userId);
 
   const {
     control,
@@ -86,18 +77,20 @@ function EditWorkspaceFormModal({
     name: 'images',
   });
 
-  const onSubmit = (data: WorkspaceUpdateFormSchema) => {
-    const updatedWorkspace = workspaceUpdateFormToApiSchema.parse(data);
-    console.log('Updated Workspace Data:', updatedWorkspace);
-    update(updatedWorkspace);
+  const onSubmit = (data: any) => {
+    console.log(data);
+    const formated = workspaceCreateToApiSchema.parse(data);
+    console.log('Create Workspace Data:', formated);
+    create(formated);
     onClose?.();
+    form.reset();
   };
 
   return (
     <DialogContent className="sm:max-w-[650px] max-h-[90vh] overflow-y-auto">
       <form id="workspace-edit-form" onSubmit={handleSubmit(onSubmit)}>
         <DialogHeader>
-          <DialogTitle>Edit Workspace - {payload?.name}</DialogTitle>
+          <DialogTitle>Create Workspace</DialogTitle>
           <DialogDescription>
             Make changes to the workspace here. Click save when you're done.
           </DialogDescription>
@@ -174,54 +167,6 @@ function EditWorkspaceFormModal({
               </Field>
             )}
           />
-
-          <Controller
-            name="isActive"
-            control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel>Active Status</FieldLabel>
-                <Select
-                  value={String(field.value)}
-                  onValueChange={(v) => field.onChange(v === 'true')}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="true">Active</SelectItem>
-                    <SelectItem value="false">Inactive</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FieldError>{fieldState.error?.message}</FieldError>
-              </Field>
-            )}
-          />
-
-          {user.role === 'ADMIN' && (
-            <Controller
-              name="isVerified"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>Verified Status</FieldLabel>
-                  <Select
-                    value={String(field.value)}
-                    onValueChange={(v) => field.onChange(v === 'true')}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select Verification" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="true">Verified</SelectItem>
-                      <SelectItem value="false">Not Verified</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FieldError>{fieldState.error?.message}</FieldError>
-                </Field>
-              )}
-            />
-          )}
 
           <Controller
             name="address"
@@ -312,11 +257,11 @@ function EditWorkspaceFormModal({
           </Field>
         </FieldGroup>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">Create</Button>
         </DialogFooter>
       </form>
     </DialogContent>
   );
 }
 
-export default EditWorkspaceFormModal;
+export default CreateWorkspaceFormModal;

@@ -21,88 +21,114 @@ function Navbar() {
     setIsOpen(false);
   };
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, isLoading } = useAuth();
 
   const menu = (
     <>
-      <nav className="flex flex-col gap-4 px-2 py-4">
-        <Link className=" font-medium" onClick={closeSheet} href="/">
-          Home
-        </Link>
-        <Link className=" font-medium" onClick={closeSheet} href="/workspaces">
-          Workspaces
-        </Link>
-        <Link className=" font-medium" onClick={closeSheet} href="/dashboard">
-          Admin
-        </Link>
-        {!isAuthenticated && (
-          <Link className=" font-medium" onClick={closeSheet} href="/login">
-            Login
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <nav className="flex flex-col gap-4 px-2 py-4">
+          <Link className=" font-medium" onClick={closeSheet} href="/">
+            Home
           </Link>
-        )}
-        {isAuthenticated && (
-          <Link className=" font-medium" onClick={closeSheet} href="/profile">
-            Profile
+          <Link
+            className=" font-medium"
+            onClick={closeSheet}
+            href="/workspaces"
+          >
+            Workspaces
           </Link>
-        )}
-      </nav>
+          {(user?.role === 'PROVIDER' || user?.role === 'ADMIN') && (
+            <Link
+              className=" font-medium"
+              onClick={closeSheet}
+              href="/dashboard"
+            >
+              Dashboard
+            </Link>
+          )}
+          {!isAuthenticated && (
+            <Link className=" font-medium" onClick={closeSheet} href="/login">
+              Login
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link className=" font-medium" onClick={closeSheet} href="/profile">
+              Profile
+            </Link>
+          )}
+        </nav>
+      )}
     </>
   );
 
   return (
     <header className="shadow-sm sticky top-0 bg-white z-50">
-      <div className="flex justify-between items-center p-2 container mx-auto">
-        <div className="flex items-center">
-          <Link href="/">
-            <Image width={100} height={20} src="/images/logo2.png" alt="logo" />
-          </Link>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <nav className="hidden md:flex gap-4">
-            <Link href="/" className="text-sm font-medium">
-              Home
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <div className="flex justify-between items-center p-2 container mx-auto">
+          <div className="flex items-center">
+            <Link href="/">
+              <Image
+                width={100}
+                height={20}
+                src="/images/logo2.png"
+                alt="logo"
+              />
             </Link>
-            <Link href="/workspaces" className="text-sm font-medium">
-              Workspaces
-            </Link>
-            <Link href="/dashboard" className="text-sm font-medium">
-              Admin
-            </Link>
-          </nav>
-          <div className="hidden md:block">
-            {!isAuthenticated && (
-              <Button>
-                <Link href="/login">Login</Link>
-              </Button>
-            )}
-            {isAuthenticated && (
-              <Button>
-                <Link href="/profile">Profile</Link>
-              </Button>
-            )}
           </div>
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <button className="md:hidden rounded-full p-2">
-                <Hamburger toggled={isOpen} toggle={setIsOpen} size={20} />
-              </button>
-            </SheetTrigger>
 
-            <SheetContent side="right" className="w-[70vw]">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              {menu}
-              <SheetFooter>
-                <div className="w-full text-center text-sm text-muted-foreground">
-                  © {new Date().getFullYear()} WORKBASE
-                </div>
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
+          <div className="flex items-center gap-4">
+            <nav className="hidden md:flex gap-4">
+              <Link href="/" className="text-sm font-medium">
+                Home
+              </Link>
+              <Link href="/workspaces" className="text-sm font-medium">
+                Workspaces
+              </Link>
+
+              {(user?.role === 'PROVIDER' || user?.role === 'ADMIN') && (
+                <Link href="/dashboard" className="text-sm font-medium">
+                  Dashboard
+                </Link>
+              )}
+            </nav>
+            <div className="hidden md:block">
+              {!isAuthenticated && (
+                <Button>
+                  <Link href="/login">Login</Link>
+                </Button>
+              )}
+              {isAuthenticated && (
+                <Button>
+                  <Link href="/profile">Profile</Link>
+                </Button>
+              )}
+            </div>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button className="md:hidden rounded-full p-2">
+                  <Hamburger toggled={isOpen} toggle={setIsOpen} size={20} />
+                </button>
+              </SheetTrigger>
+
+              <SheetContent side="right" className="w-[70vw]">
+                <SheetHeader>
+                  <SheetTitle>Menu</SheetTitle>
+                </SheetHeader>
+                {menu}
+                <SheetFooter>
+                  <div className="w-full text-center text-sm text-muted-foreground">
+                    © {new Date().getFullYear()} WORKBASE
+                  </div>
+                </SheetFooter>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }

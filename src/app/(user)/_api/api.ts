@@ -2,11 +2,6 @@ import { getAccessToken } from '../../../lib/fetcher';
 import { Booking, Payment } from '../../../lib/type';
 
 const API = process.env.NEXT_PUBLIC_LOCAL_API;
-// const token = getAccessToken();
-// const headers = {
-//   'Content-Type': 'application/json',
-//   Authorization: `Bearer ${token}`,
-// };
 
 // WORKSPACE
 export async function getAllVerifiedWorkspaces() {

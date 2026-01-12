@@ -19,6 +19,8 @@ import {
 } from '@/components/ui/dialog';
 import { useState } from 'react';
 import EditWorkspaceFormModal from '@/components/EditWorkspaceFormModal';
+import { useDeleteWorkspace } from '../../_api/mutation';
+import { useAuth } from '../../../../hooks/useAuth';
 
 export const columns: ColumnDef<Room>[] = [
   {
@@ -30,19 +32,19 @@ export const columns: ColumnDef<Room>[] = [
     header: 'Capacity',
   },
   {
-    accessorKey: 'is_active',
+    accessorKey: 'isActive',
     header: 'Active Status',
   },
   {
-    accessorKey: 'is_verified',
+    accessorKey: 'isVerified',
     header: 'Verified Status',
   },
   {
-    accessorKey: 'room_type',
+    accessorKey: 'type',
     header: 'Room Type',
   },
   {
-    accessorKey: 'price_per_day',
+    accessorKey: 'pricePerDay',
     header: 'Price Per Day',
   },
   {
@@ -62,9 +64,11 @@ export const columns: ColumnDef<Room>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
+      const { user } = useAuth();
+      const { mutate: deleteWorkspace } = useDeleteWorkspace(user.userId);
       const workspace = row.original;
-      const handleDelete = (id: number) => {
-        alert(id);
+      const handleDelete = (id: string) => {
+        deleteWorkspace(id);
         setOpen(false);
       };
 
