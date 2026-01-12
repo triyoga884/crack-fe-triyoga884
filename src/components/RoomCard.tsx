@@ -17,7 +17,7 @@ function RoomCard(e: Room) {
     <Card key={`room-${e.id}`} className="justify-between">
       <CardHeader>
         <Image
-          src={e.images[0]}
+          src={e.images[0].url}
           alt={e.name}
           width={400}
           height={300}
