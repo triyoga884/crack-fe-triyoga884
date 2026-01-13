@@ -1,3 +1,4 @@
+const API = process.env.NEXT_PUBLIC_LOCAL_API;
 let accessToken: string | null = null;
 
 export function setAccessToken(token: string) {
@@ -28,7 +29,7 @@ export async function authFetch(
   if (res.status !== 401) return res;
 
   // try refresh
-  const refreshRes = await fetch('http://localhost:3001/auth/refresh', {
+  const refreshRes = await fetch(`${API}/auth/refresh`, {
     method: 'POST',
     credentials: 'include',
   });
