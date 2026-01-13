@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, Resolver } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
@@ -29,20 +29,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useRegister } from '../auth/mutations';
+import { useRouter } from 'next/navigation';
 
 function SignUpForm() {
   const form = useForm<SignupSchema>({
-    resolver: zodResolver(signupSchema) as any,
+    resolver: zodResolver(signupSchema) as Resolver<SignupSchema>,
     defaultValues: {
       name: '',
       email: '',
       password: '',
+      phone: '',
       role: UserRoles.USER,
     },
   });
 
+  const { mutate: register } = useRegister();
+  const router = useRouter();
+
   const onSubmit = (data: SignupSchema) => {
-    console.log(data);
+    register(data, { onSuccess: () => router.push('/login') });
   };
 
   return (
@@ -112,6 +118,23 @@ function SignUpForm() {
               )}
             />
             <Controller
+              name="phone"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="signup-form-phone">Phone</FieldLabel>
+                  <Input
+                    {...field}
+                    id="signup-form-phone"
+                    aria-invalid={fieldState.invalid}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
               name="role"
               control={form.control}
               render={({ field, fieldState }) => (
@@ -122,8 +145,8 @@ function SignUpForm() {
                       <SelectValue placeholder="Select Role" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="provider">Provider</SelectItem>
+                      <SelectItem value="USER">User</SelectItem>
+                      <SelectItem value="PROVIDER">Provider</SelectItem>
                       {/* <SelectItem value="admin">Admin</SelectItem> */}
                     </SelectContent>
                   </Select>

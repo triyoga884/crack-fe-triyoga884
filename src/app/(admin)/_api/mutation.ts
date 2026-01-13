@@ -1,6 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createWorkspace, deleteWorkspace, updateWorkspace } from './api';
-import { WorkspaceUpdateFormToApiSchema } from '../../../lib/schema';
+import {
+  createWorkspace,
+  deleteUser,
+  deleteWorkspace,
+  updateUser,
+  updateWorkspace,
+} from './api';
+import {
+  UserSchema,
+  WorkspaceUpdateFormToApiSchema,
+} from '../../../lib/schema';
 
 export function useCreateWorkspace() {
   const queryClient = useQueryClient();
@@ -34,6 +43,30 @@ export function useDeleteWorkspace() {
     onSuccess: (response) => {
       queryClient.invalidateQueries({
         queryKey: ['workspaces'],
+      });
+    },
+  });
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (user: UserSchema) => updateUser(user),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['users'],
+      });
+    },
+  });
+}
+
+export function useDeleteUser() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteUser(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['users'],
       });
     },
   });

@@ -5,9 +5,9 @@ export enum RoomType {
 }
 
 export enum UserRoles {
-  USER = 'user',
-  PROVIDER = 'provider',
-  ADMIN = 'admin',
+  USER = 'USER',
+  PROVIDER = 'PROVIDER',
+  ADMIN = 'ADMIN',
 }
 
 export interface Room {
@@ -33,11 +33,11 @@ export type WorkspaceTab = {
 };
 
 export type User = {
-  id: number;
+  id: string;
   name: string;
   email: string;
-  password: string;
   role: UserRoles;
+  phone: string;
 };
 
 export type Booking = {

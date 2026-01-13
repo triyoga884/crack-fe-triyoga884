@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { useState } from 'react';
 import EditUserFormModalAdmin from '@/components/EditUserFormModalAdmin';
+import { useDeleteUser } from '../../_api/mutation';
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -34,6 +35,10 @@ export const columns: ColumnDef<User>[] = [
     header: 'Email',
   },
   {
+    accessorKey: 'phone',
+    header: 'Phone',
+  },
+  {
     accessorKey: 'role',
     header: 'Role',
   },
@@ -41,8 +46,11 @@ export const columns: ColumnDef<User>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const user = row.original;
-      const handleDelete = (id: number) => {
-        alert(id);
+
+      const { mutate: deleteUser } = useDeleteUser();
+
+      const handleDelete = (id: string) => {
+        deleteUser(id);
         setOpen(false);
       };
 
@@ -80,7 +88,10 @@ export const columns: ColumnDef<User>[] = [
           </DropdownMenu>
           {editOpen && (
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
-              <EditUserFormModalAdmin setDialog={setEditOpen} payload={user} />
+              <EditUserFormModalAdmin
+                onClose={() => setEditOpen(false)}
+                payload={user}
+              />
             </Dialog>
           )}
           <Dialog open={open} onOpenChange={setOpen}>
@@ -88,10 +99,8 @@ export const columns: ColumnDef<User>[] = [
               <DialogHeader>
                 <DialogTitle>Warning</DialogTitle>
                 <DialogDescription>
-                  <p>
-                    Are you sure you want to delete "{user.name}
-                    "?
-                  </p>
+                  Are you sure you want to delete "{user.name}
+                  "?
                   <div className="mt-4 flex justify-end space-x-2">
                     <Button variant="outline" onClick={() => setOpen(false)}>
                       Cancel

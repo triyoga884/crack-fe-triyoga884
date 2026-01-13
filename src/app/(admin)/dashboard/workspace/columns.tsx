@@ -20,7 +20,6 @@ import {
 import { useState } from 'react';
 import EditWorkspaceFormModal from '@/components/EditWorkspaceFormModal';
 import { useDeleteWorkspace } from '../../_api/mutation';
-import { useAuth } from '../../../../hooks/useAuth';
 
 export const columns: ColumnDef<Room>[] = [
   {

@@ -10,12 +10,13 @@ export const bookingSchema = z.object({
 export type BookingSchema = z.infer<typeof bookingSchema>;
 
 export const userSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string().min(4, 'Name atleast 4 character'),
   email: z.email(),
-  password: z.string().min(4, 'Password atleast 4 character'),
+  phone: z.string(),
   role: z.enum(UserRoles).default(UserRoles.USER),
 });
+// password: z.string().min(4, 'Password atleast 4 character'),
 
 export type UserSchema = z.infer<typeof userSchema>;
 
@@ -30,6 +31,7 @@ export const signupSchema = z.object({
   name: z.string().min(4, 'Name at least 4 characters'),
   email: z.email(),
   password: z.string(),
+  phone: z.string(),
   role: z.enum(UserRoles).default(UserRoles.USER),
 });
 

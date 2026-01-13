@@ -1,4 +1,4 @@
-import React from 'react';
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -13,7 +13,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { UserSchema, userSchema } from '@/lib/schema';
 import { UserRoles, User } from '@/lib/type';
 import {
@@ -23,35 +23,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useUpdateUser } from '../app/(admin)/_api/mutation';
 
 function EditWorkspaceFormModalAdmin({
   payload,
-  setDialog,
+  onClose,
 }: {
-  payload: User | null;
-  setDialog: any;
+  payload: User;
+  onClose?: () => void;
 }) {
   const form = useForm<UserSchema>({
-    resolver: zodResolver(userSchema) as any,
+    resolver: zodResolver(userSchema) as Resolver<UserSchema>,
     defaultValues: {
       id: payload?.id,
       name: payload?.name,
       email: payload?.email,
-      password: payload?.password,
-      role: payload?.role || UserRoles.USER,
+      phone: payload?.phone,
+      role: payload?.role,
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    setDialog(false);
+  const { mutate: update } = useUpdateUser();
+
+  const onSubmit = (data: UserSchema) => {
+    // console.log('Submitting:', data);
+    update(data);
+    onClose?.();
   };
 
   return (
-    <form id="user-edit-form" onSubmit={form.handleSubmit(onSubmit)}>
-      <DialogContent className="sm:max-w-[400px]">
+    <DialogContent className="sm:max-w-[400px]">
+      <form id="user-edit-form" onSubmit={form.handleSubmit(onSubmit)}>
         <DialogHeader>
-          <DialogTitle>Edit User</DialogTitle>
+          <DialogTitle className="mb-2">Edit User</DialogTitle>
         </DialogHeader>
         <FieldGroup>
           <Controller
@@ -65,9 +69,9 @@ function EditWorkspaceFormModalAdmin({
                     <SelectValue placeholder="Select Role" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="user">User</SelectItem>
-                    <SelectItem value="provider">Provider</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value={UserRoles.USER}>User</SelectItem>
+                    <SelectItem value={UserRoles.PROVIDER}>Provider</SelectItem>
+                    <SelectItem value={UserRoles.ADMIN}>Admin</SelectItem>
                   </SelectContent>
                 </Select>
                 <FieldError>{fieldState.error?.message}</FieldError>
@@ -76,12 +80,12 @@ function EditWorkspaceFormModalAdmin({
           />
         </FieldGroup>
         <DialogFooter>
-          <Button form="user-edit-form" type="submit">
+          <Button className="my-2" type="submit">
             Save changes
           </Button>
         </DialogFooter>
-      </DialogContent>
-    </form>
+      </form>
+    </DialogContent>
   );
 }
 

@@ -36,3 +36,14 @@ export async function logout() {
   });
   clearAccessToken();
 }
+
+export async function register(user: any) {
+  await fetch(`${API}/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+    body: JSON.stringify(user),
+  });
+}
