@@ -11,7 +11,7 @@ export default function AuthProtectedLayout({
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return null;
-  if (!isAuthenticated) redirect('/');
+  if (isAuthenticated) redirect('/');
 
   return <>{children}</>;
 }
