@@ -7,7 +7,7 @@ function page() {
   
   if (isLoading) return <div>Loading...</div>;
 
-  if (!isAuthenticated) redirect('/login');
+  if (!isAuthenticated) redirect('/');
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-600">
