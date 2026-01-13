@@ -8,6 +8,7 @@ export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const hasRefreshToken = req.cookies.has('refresh_token');
+  // const access_token = req.cookies.get('access_token')?.value
 
   // 🔒 Logged-in users should NOT access login/register
   if (hasRefreshToken && AUTH_PAGES.includes(pathname)) {

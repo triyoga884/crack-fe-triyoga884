@@ -1,4 +1,3 @@
-import { getAccessToken } from '../../../lib/fetcher';
 import {
   UserSchema,
   WorkspaceUpdateFormToApiSchema,
@@ -11,8 +10,8 @@ export async function getWorkspaceByUserId(id: string) {
   const res = await fetch(`${API}/workspaces/user/${id}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
   });
   const data = await res.json();
   return data;
@@ -23,8 +22,8 @@ export async function createWorkspace(workspace: any) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
     body: JSON.stringify(workspace),
   });
   const data = await res.json();
@@ -38,8 +37,8 @@ export async function updateWorkspace(
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
     body: JSON.stringify(workspace),
   });
   const data = await res.json();
@@ -51,8 +50,8 @@ export async function deleteWorkspace(id: string) {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
   });
   const data = await res.json();
   return data;
@@ -63,8 +62,8 @@ export async function getUsers() {
   const res = await fetch(`${API}/users`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
   });
   const data = res.json();
   return data;
@@ -76,8 +75,8 @@ export async function updateUser(user: UserSchema) {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
     body: JSON.stringify(rest),
   });
   const data = res.json();
@@ -89,8 +88,8 @@ export async function deleteUser(id: string) {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
   });
   const data = res.json();
   return data;

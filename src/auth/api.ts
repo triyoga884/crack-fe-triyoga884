@@ -1,9 +1,4 @@
-import {
-  authFetch,
-  setAccessToken,
-  clearAccessToken,
-  getAccessToken,
-} from '@/lib/fetcher';
+import { authFetch } from '@/lib/fetcher';
 
 const API = `${process.env.NEXT_PUBLIC_LOCAL_API}/auth`;
 
@@ -18,7 +13,6 @@ export async function login(email: string, password: string) {
   if (!res.ok) throw new Error('Login failed');
 
   const data = await res.json();
-  setAccessToken(data.access_token);
   return data;
 }
 
@@ -31,10 +25,8 @@ export async function getMe() {
 export async function logout() {
   await fetch(`${API}/logout`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${getAccessToken()}` },
     credentials: 'include',
   });
-  clearAccessToken();
 }
 
 export async function register(user: any) {
@@ -42,8 +34,8 @@ export async function register(user: any) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
     body: JSON.stringify(user),
   });
 }

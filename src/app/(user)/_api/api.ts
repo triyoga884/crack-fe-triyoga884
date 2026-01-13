@@ -1,4 +1,3 @@
-import { getAccessToken } from '../../../lib/fetcher';
 import { Booking, Payment } from '../../../lib/type';
 
 const API = process.env.NEXT_PUBLIC_LOCAL_API;
@@ -33,8 +32,8 @@ export async function postBooking(booking: Booking) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
     body: e,
   });
   const data = await res.json();
@@ -45,8 +44,8 @@ export async function getChekoutData(id: string) {
   const res = await fetch(`${API}/booking/checkout/${id}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
   });
   const data = await res.json();
   return data;
@@ -63,8 +62,8 @@ export async function postPayment(payment: Payment) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getAccessToken()}`,
     },
+    credentials: 'include',
     body: e,
   });
   const data = res.json();

@@ -1,17 +1,4 @@
 const API = process.env.NEXT_PUBLIC_LOCAL_API;
-let accessToken: string | null = null;
-
-export function setAccessToken(token: string) {
-  accessToken = token;
-}
-
-export function clearAccessToken() {
-  accessToken = null;
-}
-
-export function getAccessToken() {
-  return accessToken;
-}
 
 export async function authFetch(
   input: RequestInfo,
@@ -19,10 +6,6 @@ export async function authFetch(
 ): Promise<Response> {
   const res = await fetch(input, {
     ...init,
-    headers: {
-      ...(init.headers || {}),
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-    },
     credentials: 'include',
   });
 
@@ -34,20 +17,10 @@ export async function authFetch(
     credentials: 'include',
   });
 
-  if (!refreshRes.ok) {
-    clearAccessToken();
-    throw new Error('Unauthorized');
-  }
-
-  const data = await refreshRes.json();
-  setAccessToken(data.accessToken);
+  if (!refreshRes.ok) throw new Error('Unauthorized');
 
   return fetch(input, {
     ...init,
-    headers: {
-      ...(init.headers || {}),
-      Authorization: `Bearer ${data.accessToken}`,
-    },
     credentials: 'include',
   });
 }
