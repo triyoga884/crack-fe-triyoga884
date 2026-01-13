@@ -1,5 +1,6 @@
 import LoginForm from '@/components/LoginForm';
 import { useAuth } from '@/hooks/useAuth';
+import { redirect } from 'next/navigation';
 
 function page() {
     const { isLoading, isAuthenticated } = useAuth();
