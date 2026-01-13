@@ -12,12 +12,12 @@ import {
 } from '@/components/ui/pagination';
 import RoomCard from '@/components/RoomCard';
 import SearchBar from '@/components/SearchBar';
-import { useAllVerifiedWorkspaces } from '../_api/queries';
+import { useAllWorkspaces } from '../_api/queries';
 import { Skeleton } from '../../../components/ui/skeleton';
 import { useAuth } from '../../../hooks/useAuth';
 
 function Page() {
-  const { data, isPending, error } = useAllVerifiedWorkspaces();
+  const { data, isPending, error } = useAllWorkspaces(true);
 
   const { user } = useAuth();
   console.log(user);

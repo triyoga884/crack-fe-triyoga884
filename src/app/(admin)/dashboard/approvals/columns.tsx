@@ -1,14 +1,14 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Room } from '@/lib/type';
 import { Check, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { useState } from 'react';
 import ConfirmModal from '@/components/ConfirmModal';
+import { useDeleteWorkspace, useUpdateWorkspace } from '../../_api/mutation';
 
-export const columns: ColumnDef<Room>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'name',
     header: 'Room Name',
@@ -18,19 +18,19 @@ export const columns: ColumnDef<Room>[] = [
     header: 'Capacity',
   },
   {
-    accessorKey: 'is_active',
+    accessorKey: 'isActive',
     header: 'Active Status',
   },
   {
-    accessorKey: 'is_verified',
+    accessorKey: 'isVerified',
     header: 'Verified Status',
   },
   {
-    accessorKey: 'room_type',
+    accessorKey: 'type',
     header: 'Room Type',
   },
   {
-    accessorKey: 'price_per_day',
+    accessorKey: 'pricePerDay',
     header: 'Price Per Day',
   },
   {
@@ -49,12 +49,17 @@ export const columns: ColumnDef<Room>[] = [
       const [modalApproveOpen, setModalApproveOpen] = useState(false);
       const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
 
+      const { mutate: update } = useUpdateWorkspace();
+      const { mutate: deleteWorkspace } = useDeleteWorkspace();
+
       const handleApprove = () => {
-        alert(workspace.id);
+        workspace.isVerified = true;
+        console.log(workspace);
+        update(workspace);
         setModalApproveOpen(false);
       };
       const handleDelete = () => {
-        alert(workspace.id);
+        deleteWorkspace(workspace.id);
         setModalDeleteOpen(false);
       };
 

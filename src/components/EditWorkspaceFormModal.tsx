@@ -60,7 +60,7 @@ function EditWorkspaceFormModal({
 
   const { user } = useAuth();
 
-  const { mutate: update } = useUpdateWorkspace(user.userId);
+  const { mutate: update } = useUpdateWorkspace();
 
   const {
     control,

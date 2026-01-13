@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import {
-  getAllVerifiedWorkspaces,
+  getAllWorkspaces,
   getAvailableDates,
   getChekoutData,
   getWorkspaceById,
 } from './api';
 
-export function useAllVerifiedWorkspaces() {
+export function useAllWorkspaces(isVerified: boolean) {
   return useQuery({
-    queryKey: ['workspaces'],
-    queryFn: getAllVerifiedWorkspaces,
+    queryKey: ['workspaces', isVerified],
+    queryFn: () => getAllWorkspaces(isVerified),
   });
 }
 

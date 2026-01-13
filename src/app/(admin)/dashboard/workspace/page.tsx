@@ -4,7 +4,7 @@ import { columns } from './columns';
 import { apiToWorkspaceUpdateFormSchema } from '@/lib/schema';
 import { useAuth } from '../../../../hooks/useAuth';
 import { useWorkspaceByUserId } from '../../_api/queries';
-import { useAllVerifiedWorkspaces } from '../../../(user)/_api/queries';
+import { useAllWorkspaces } from '../../../(user)/_api/queries';
 import { Button } from '../../../../components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ function Page() {
   const { data: provider, isLoading: providerLoading } = useWorkspaceByUserId(
     user.userId
   );
-  const { data: admin, isLoading: adminLoading } = useAllVerifiedWorkspaces();
+  const { data: admin, isLoading: adminLoading } = useAllWorkspaces(true);
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
 

@@ -49,9 +49,7 @@ function CreateWorkspaceFormModal({ onClose }: { onClose: () => void }) {
     },
   });
 
-  const { user } = useAuth();
-
-  const { mutate: create } = useCreateWorkspace(user.userId);
+  const { mutate: create } = useCreateWorkspace();
 
   const {
     control,

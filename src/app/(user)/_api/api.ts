@@ -4,8 +4,8 @@ import { Booking, Payment } from '../../../lib/type';
 const API = process.env.NEXT_PUBLIC_LOCAL_API;
 
 // WORKSPACE
-export async function getAllVerifiedWorkspaces() {
-  const res = await fetch(`${API}/workspaces/verified`);
+export async function getAllWorkspaces(isVerified: boolean) {
+  const res = await fetch(`${API}/workspaces?isVerified=${isVerified}`);
   const data = await res.json();
   return data;
 }

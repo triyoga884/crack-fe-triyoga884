@@ -1,23 +1,16 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import { DataTable } from '@/components/ui/data-table';
 import { columns } from './columns';
+import { useAllWorkspaces } from '../../../(user)/_api/queries';
 
 function Page() {
-  const query = useQuery({
-    queryKey: ['rooms'],
-    queryFn: async () => {
-      const response = await fetch('/dummy/room.json');
-      return response.json();
-    },
-  });
+  const { data, isLoading, error } = useAllWorkspaces(false);
 
   return (
     <div>
-      {query.isLoading && <div>Loading...</div>}
-      {query.isError && <div>Error loading data.</div>}
-      {query.data && <DataTable columns={columns} data={query.data} />}
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error loading data.</div>}
+      {data && <DataTable columns={columns} data={data} />}
     </div>
   );
 }

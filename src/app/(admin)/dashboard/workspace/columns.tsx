@@ -64,8 +64,7 @@ export const columns: ColumnDef<Room>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const { user } = useAuth();
-      const { mutate: deleteWorkspace } = useDeleteWorkspace(user.userId);
+      const { mutate: deleteWorkspace } = useDeleteWorkspace();
       const workspace = row.original;
       const handleDelete = (id: string) => {
         deleteWorkspace(id);
