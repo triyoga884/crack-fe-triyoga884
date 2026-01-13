@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const AUTH_PAGES = ['/login', '/register'];
-const PROTECTED_PAGES = ['/dashboard', '/checkout', '/profile'];
+// const PROTECTED_PAGES = ['/dashboard', '/checkout', '/profile'];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -16,9 +16,9 @@ export function proxy(req: NextRequest) {
   }
 
   // 🔑 Logged-out users should NOT access protected pages
-  if (!access_token && PROTECTED_PAGES.some((p) => pathname.startsWith(p))) {
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
+  // if (!access_token && PROTECTED_PAGES.some((p) => pathname.startsWith(p))) {
+  //   return NextResponse.redirect(new URL('/login', req.url));
+  // }
 
   return NextResponse.next();
 }
