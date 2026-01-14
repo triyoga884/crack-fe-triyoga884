@@ -3,7 +3,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import { redirect } from 'next/navigation';
 
-export default function UserProtectedLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export default function UserProtectedLayout({
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return null;
-  if (!isAuthenticated) redirect('/login');
+  if (isAuthenticated) redirect('/');
 
   return <>{children}</>;
 }

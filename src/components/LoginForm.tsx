@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { LoginSchema, loginSchema } from '@/lib/schema';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '../auth/mutations';
+import { useEffect } from 'react';
 
 function LoginForm() {
   const router = useRouter();
@@ -31,10 +32,16 @@ function LoginForm() {
       password: 'password123',
     },
   });
-  const { mutate: login, isPending, error } = useLogin();
+  const { mutateAsync: login, isPending, error, isSuccess } = useLogin();
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/');
+    }
+  }, [isSuccess, router]);
 
   const onSubmit = async (data: LoginSchema) => {
-    login(data, { onSuccess: () => router.push('/') });
+    await login(data);
   };
 
   return (

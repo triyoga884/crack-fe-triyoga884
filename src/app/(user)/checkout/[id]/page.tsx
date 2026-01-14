@@ -16,26 +16,14 @@ import { useParams, useRouter } from 'next/navigation';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { dateOnly } from '../../../../lib/datesFormatter';
 import { usePayment } from '../../_api/mutations';
-import { Payment } from '../../../../lib/type';
 
 function Page() {
   const { id } = useParams();
   const { data: booking, isPending, error } = useCheckout(id as string);
   console.log(booking);
-  // const { data: workspace, isPending: workspaceLoading } = useWorkspaceById(
-  //   booking?.coworkingSpaceId, {
-  //     enabled:
-  //   }
-  // );
+
   const { mutate: postPayment } = usePayment();
   const router = useRouter();
-
-  // const workspace = {
-  //   name: 'tes',
-  //   description: 'tes',
-  //   address: 'tes',
-  // };
-  // const workspaceLoading = false;
 
   const form = useForm({
     defaultValues: {
