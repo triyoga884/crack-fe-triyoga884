@@ -94,3 +94,36 @@ export async function deleteUser(id: string) {
   const data = res.json();
   return data;
 }
+
+// BOOKING
+
+export async function getBookings() {
+  const res = await fetch(`${API}/bookings`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  const data = res.json();
+  return data;
+}
+
+export async function getBookingsMyWorkspace() {
+  const res = await fetch(`${API}/bookings/workspace/me`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  const data = res.json();
+  return data;
+}
+
+export async function deleteBooking(id: string) {
+  const res = await fetch(`${API}/bookings/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  const data = res.json();
+  return data;
+}

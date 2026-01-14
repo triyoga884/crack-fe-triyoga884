@@ -17,7 +17,7 @@ export async function getWorkspaceById(id: string) {
 
 // BOOKING
 export async function getAvailableDates(id: string) {
-  const res = await fetch(`${API}/booking/${id}/availability`);
+  const res = await fetch(`${API}/bookings/${id}/availability`);
   const data = await res.json();
   return data;
 }
@@ -28,7 +28,7 @@ export async function postBooking(booking: Booking) {
     startDate: booking.startDate,
     endDate: booking.endDate,
   });
-  const res = await fetch(`${API}/booking`, {
+  const res = await fetch(`${API}/bookings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export async function postBooking(booking: Booking) {
 }
 
 export async function getChekoutData(id: string) {
-  const res = await fetch(`${API}/booking/checkout/${id}`, {
+  const res = await fetch(`${API}/bookings/checkout/${id}`, {
     headers: {
       'Content-Type': 'application/json',
     },

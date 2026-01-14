@@ -1,11 +1,8 @@
 'use client';
 import { DataTable } from '@/components/ui/data-table';
 import { columns } from './columns';
-import { apiToWorkspaceUpdateFormSchema } from '@/lib/schema';
 import { useAuth } from '../../../../hooks/useAuth';
-import { useWorkspaceByUserId } from '../../_api/queries';
-import { useAllWorkspaces } from '../../../(user)/_api/queries';
-import { Button } from '../../../../components/ui/button';
+import { useBookingMyWorkspace, useBookings } from '../../_api/queries';
 import { Dialog } from '@/components/ui/dialog';
 import { useState } from 'react';
 import CreateWorkspaceFormModal from '../../../../components/createWorkspaceFormModal';
@@ -13,28 +10,23 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 
 function Page() {
   const { user } = useAuth();
-  const { data: provider, isLoading: providerLoading } = useWorkspaceByUserId(
+  const { data: admin, isLoading: adminLoading } = useBookings(user.role);
+  const { data: provider, isLoading: providerLoading } = useBookingMyWorkspace(
     user.userId
   );
-  const { data: admin, isLoading: adminLoading } = useAllWorkspaces(true);
+
+  console.log('admin', admin);
+  console.log('provider', provider);
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const isProvider = user?.role === 'PROVIDER';
   const data = isProvider ? provider : admin;
   const loading = isProvider ? providerLoading : adminLoading;
-  const fixData = data?.map((room: any) =>
-    apiToWorkspaceUpdateFormSchema.parse(room)
-  );
 
   return (
     <div>
       <div className="p-2 flex flex-row-reverse">
-        {user.role === 'PROVIDER' && (
-          <Button onClick={() => setCreateModalOpen(true)}>
-            Add Workspace
-          </Button>
-        )}
         <Dialog open={createModalOpen} onOpenChange={setCreateModalOpen}>
           <CreateWorkspaceFormModal onClose={() => setCreateModalOpen(false)} />
         </Dialog>
@@ -45,7 +37,7 @@ function Page() {
             <Skeleton className="h-6" />
           </div>
         ))}
-      {data && <DataTable columns={columns} data={fixData} />}
+      {data && <DataTable columns={columns} data={data} />}
     </div>
   );
 }
