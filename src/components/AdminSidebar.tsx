@@ -113,7 +113,7 @@ function AdminSidebar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-60">
                 <DropdownMenuItem className="cursor-pointer">
-                  <Link className="w-full" href="/profile">
+                  <Link className="w-full" href="/dashboard/profile">
                     Profile
                   </Link>
                 </DropdownMenuItem>

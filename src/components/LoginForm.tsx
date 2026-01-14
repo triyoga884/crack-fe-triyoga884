@@ -19,12 +19,9 @@ import {
 } from '@/components/ui/field';
 import Link from 'next/link';
 import { LoginSchema, loginSchema } from '@/lib/schema';
-import { useRouter } from 'next/navigation';
 import { useLogin } from '../auth/mutations';
-import { useEffect } from 'react';
 
 function LoginForm() {
-  const router = useRouter();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema) as any,
     defaultValues: {
@@ -32,16 +29,10 @@ function LoginForm() {
       password: 'password123',
     },
   });
-  const { mutateAsync: login, isPending, error, isSuccess } = useLogin();
+  const { mutate: login, isPending, error } = useLogin();
 
-  useEffect(() => {
-    if (isSuccess) {
-      router.push('/');
-    }
-  }, [isSuccess, router]);
-
-  const onSubmit = async (data: LoginSchema) => {
-    await login(data);
+  const onSubmit = (data: LoginSchema) => {
+    login(data);
   };
 
   return (

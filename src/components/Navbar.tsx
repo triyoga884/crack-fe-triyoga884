@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
@@ -21,7 +21,7 @@ function Navbar() {
     setIsOpen(false);
   };
 
-  const { isAuthenticated, user, isLoading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
   const menu = (
     <>
@@ -39,15 +39,6 @@ function Navbar() {
           >
             Workspaces
           </Link>
-          {(user?.role === 'PROVIDER' || user?.role === 'ADMIN') && (
-            <Link
-              className=" font-medium"
-              onClick={closeSheet}
-              href="/dashboard"
-            >
-              Dashboard
-            </Link>
-          )}
           {!isAuthenticated && (
             <Link className=" font-medium" onClick={closeSheet} href="/login">
               Login
@@ -88,12 +79,6 @@ function Navbar() {
               <Link href="/workspaces" className="text-sm font-medium">
                 Workspaces
               </Link>
-
-              {(user?.role === 'PROVIDER' || user?.role === 'ADMIN') && (
-                <Link href="/dashboard" className="text-sm font-medium">
-                  Dashboard
-                </Link>
-              )}
             </nav>
             <div className="hidden md:block">
               {!isAuthenticated && (

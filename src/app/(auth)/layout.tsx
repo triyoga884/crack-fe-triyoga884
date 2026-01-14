@@ -8,10 +8,12 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
 
   if (isLoading) return null;
-  if (isAuthenticated) redirect('/');
+  if (isAuthenticated && user.role === 'USER') {
+    redirect('/');
+  } else if (isAuthenticated && user.role !== 'USER') redirect('/dashboard');
 
   return <>{children}</>;
 }
