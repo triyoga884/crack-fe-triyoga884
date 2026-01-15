@@ -9,13 +9,14 @@ import {
 } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { Calendar, MapPin } from 'lucide-react';
+import { Calendar, MapPin, User } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useCheckout } from '../../_api/queries';
 import { useParams, useRouter } from 'next/navigation';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { dateOnly } from '../../../../lib/datesFormatter';
 import { usePayment } from '../../_api/mutations';
+import { rupiahFormat } from '../../../../lib/rupiahFormatter';
 
 function Page() {
   const { id } = useParams();
@@ -40,66 +41,91 @@ function Page() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto max-w-7xl px-4">
       {isPending ? (
-        <div className="min-h-[calc(100vh-300px)]  flex flex-col gap-4 p-4 md:flex-row my-8 md:my-12">
-          <Skeleton className="h-[300px] md:h-[450px] md:flex-1" />
-          <div className="flex flex-col gap-2 md:gap-4  md:flex-1">
-            <Skeleton className="h-4 md:w-[80%]" />
-            <Skeleton className="h-4" />
-            <Skeleton className="h-4 md:w-[50%]" />
-            <Skeleton className="h-4 md:w-[80%]" />
-            <Skeleton className="h-4" />
-            <Skeleton className="h-4 md:w-[50%]" />
-            <Skeleton className="h-10 w-[20%]" />
+        <div className="my-10 flex min-h-[calc(100vh-300px)] flex-col gap-6 md:flex-row">
+          {/* Image / Card Skeleton */}
+          <Skeleton className="h-80 w-full rounded-xl md:h-[460px] md:flex-1" />
+
+          {/* Content Skeleton */}
+          <div className="flex flex-1 flex-col gap-3">
+            <Skeleton className="h-6 w-1/3" />
+            <Skeleton className="h-4 w-4/5" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-2/3" />
+            <Skeleton className="h-10 w-32 rounded-md" />
           </div>
         </div>
       ) : (
-        <div className="min-h-[calc(100vh-300px)] space-y-8  p-4 md:p-8 flex flex-col md:flex-row gap-8 md:gap-16 my-6 md:my-12">
-          {/* Card */}
-          <div className="space-y-6 w-full">
-            <h1 className="font-bold text-2xl">Checkout</h1>
-            <Card>
-              <CardHeader>
-                <CardTitle>{booking.coworkingSpace.name}</CardTitle>
-                <CardDescription>
+        <div className="my-10 flex min-h-[calc(100vh-300px)] flex-col gap-10 md:flex-row md:gap-16">
+          {/* Checkout Info */}
+          <div className="w-full space-y-6 md:flex-1">
+            <h1 className="text-2xl font-bold tracking-tight">Checkout</h1>
+
+            <Card className="rounded-xl shadow-sm">
+              <CardHeader className="space-y-1">
+                <CardTitle className="text-lg">
+                  {booking.coworkingSpace.name}
+                </CardTitle>
+                <CardDescription className="text-sm leading-relaxed line-clamp-1">
                   {booking.coworkingSpace.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="font-medium text-sm flex flex-col gap-4">
-                <div className="flex gap-2 items-center">
-                  <Calendar />{' '}
-                  <p>{`${dateOnly(booking.startDate)} - ${dateOnly(
-                    booking.endDate
-                  )}`}</p>
+
+              <CardContent className="flex flex-col gap-4 text-sm">
+                <div className="flex items-center gap-2 font-medium">
+                  {booking.coworkingSpace.type}
                 </div>
-                <div className="flex gap-2 items-center">
-                  <MapPin /> <p>{booking.coworkingSpace.address}</p>
+
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <User className="h-4 w-4" />
+                  <p>{booking.coworkingSpace.capacity} person</p>
+                </div>
+
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <p>
+                    {dateOnly(booking.startDate)} – {dateOnly(booking.endDate)}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <MapPin className="h-4 w-4" />
+                  <p>{booking.coworkingSpace.address}</p>
                 </div>
               </CardContent>
             </Card>
           </div>
-          {/* Order Details  */}
-          <div className="space-y-6 w-full">
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Order Details</h2>
-              <div className="flex justify-between">
-                <p>Amount</p>
-                <p>{booking.totalPrice}</p>
+
+          {/* Order & Payment */}
+          <div className="w-full space-y-8 md:max-w-md">
+            {/* Order Summary */}
+            <div className="space-y-4 rounded-xl border bg-card p-6 shadow-sm">
+              <h2 className="text-lg font-semibold">Order Details</h2>
+
+              <div className="flex justify-between text-sm">
+                <p className="text-muted-foreground">Amount</p>
+                <p>{rupiahFormat(booking.totalPrice)}</p>
               </div>
-              {/* <div className="flex justify-between">
-            <p>Tax</p>
-            <p>Rp.18.000</p>
-          </div> */}
+
               <Separator />
-              <div className="flex justify-between font-bold">
+
+              <div className="flex justify-between text-base font-bold">
                 <p>Total</p>
-                <p>{booking.totalPrice}</p>
+                <p>{rupiahFormat(booking.totalPrice)}</p>
               </div>
             </div>
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Payment Method</h2>
-              <form id="payment-method" onSubmit={form.handleSubmit(onSubmit)}>
+
+            {/* Payment Method */}
+            <div className="space-y-4 rounded-xl border bg-card p-6 shadow-sm">
+              <h2 className="text-lg font-semibold">Payment Method</h2>
+
+              <form
+                id="payment-method"
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-2"
+              >
                 <Controller
                   name="method"
                   control={form.control}
@@ -107,26 +133,28 @@ function Page() {
                     <RadioGroup
                       onValueChange={field.onChange}
                       value={field.value}
-                      className="space-y-2"
+                      className="space-y-3"
                     >
-                      <div className="flex items-center gap-2 justify-between border-b pb-2 mb-2">
-                        <label htmlFor="credit">Credit Card</label>
+                      <label className="flex cursor-pointer items-center justify-between rounded-lg border p-3 hover:bg-muted">
+                        <span className="font-medium">Credit Card</span>
                         <RadioGroupItem value="CREDIT_CARD" id="credit" />
-                      </div>
+                      </label>
 
-                      <div className="flex items-center gap-2 justify-between border-b pb-2 mb-2">
-                        <label htmlFor="transfer">Transfer</label>
+                      <label className="flex cursor-pointer items-center justify-between rounded-lg border p-3 hover:bg-muted">
+                        <span className="font-medium">Transfer</span>
                         <RadioGroupItem value="TRANSFER" id="transfer" />
-                      </div>
+                      </label>
                     </RadioGroup>
                   )}
                 />
               </form>
             </div>
+
+            {/* CTA */}
             <Button
               form="payment-method"
-              className="w-full mt-4 py-6 text-xl"
               type="submit"
+              className="h-12 w-full text-base font-semibold"
             >
               Confirm Payment
             </Button>
