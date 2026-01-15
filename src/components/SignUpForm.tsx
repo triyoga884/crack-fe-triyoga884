@@ -52,26 +52,39 @@ function SignUpForm() {
   };
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle>Create your account</CardTitle>
-        <CardDescription>
-          Fill form below to create your account
+    <Card className="w-full max-w-sm rounded-2xl border shadow-md">
+      <CardHeader className="space-y-2 text-center">
+        <CardTitle className="text-2xl font-bold tracking-tight">
+          Create your account
+        </CardTitle>
+        <CardDescription className="text-sm leading-relaxed">
+          Fill the form below to create your account
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form id="signup-form" onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
+
+      <CardContent className="pt-4">
+        <form
+          id="signup-form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4"
+        >
+          <FieldGroup className="space-y-4">
             <Controller
               name="name"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-form-name">Name</FieldLabel>
+                <Field data-invalid={fieldState.invalid} className="space-y-1">
+                  <FieldLabel
+                    htmlFor="signup-form-name"
+                    className="text-sm font-medium"
+                  >
+                    Name
+                  </FieldLabel>
                   <Input
                     {...field}
                     id="signup-form-name"
                     aria-invalid={fieldState.invalid}
+                    className="h-11 rounded-lg"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -79,17 +92,24 @@ function SignUpForm() {
                 </Field>
               )}
             />
+
             <Controller
               name="email"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-form-email">Email</FieldLabel>
+                <Field data-invalid={fieldState.invalid} className="space-y-1">
+                  <FieldLabel
+                    htmlFor="signup-form-email"
+                    className="text-sm font-medium"
+                  >
+                    Email
+                  </FieldLabel>
                   <Input
                     type="email"
                     {...field}
                     id="signup-form-email"
                     aria-invalid={fieldState.invalid}
+                    className="h-11 rounded-lg"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -97,12 +117,16 @@ function SignUpForm() {
                 </Field>
               )}
             />
+
             <Controller
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-form-password">
+                <Field data-invalid={fieldState.invalid} className="space-y-1">
+                  <FieldLabel
+                    htmlFor="signup-form-password"
+                    className="text-sm font-medium"
+                  >
                     Password
                   </FieldLabel>
                   <Input
@@ -110,6 +134,7 @@ function SignUpForm() {
                     {...field}
                     id="signup-form-password"
                     aria-invalid={fieldState.invalid}
+                    className="h-11 rounded-lg"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -117,16 +142,23 @@ function SignUpForm() {
                 </Field>
               )}
             />
+
             <Controller
               name="phone"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-form-phone">Phone</FieldLabel>
+                <Field data-invalid={fieldState.invalid} className="space-y-1">
+                  <FieldLabel
+                    htmlFor="signup-form-phone"
+                    className="text-sm font-medium"
+                  >
+                    Phone
+                  </FieldLabel>
                   <Input
                     {...field}
                     id="signup-form-phone"
                     aria-invalid={fieldState.invalid}
+                    className="h-11 rounded-lg"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -134,39 +166,51 @@ function SignUpForm() {
                 </Field>
               )}
             />
+
             <Controller
               name="role"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>User Roles</FieldLabel>
+                <Field className="space-y-1">
+                  <FieldLabel className="text-sm font-medium">
+                    User Role
+                  </FieldLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="w-full lg:w-1/2">
-                      <SelectValue placeholder="Select Role" />
+                    <SelectTrigger className="h-11 w-full rounded-lg">
+                      <SelectValue placeholder="Select role" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="USER">User</SelectItem>
                       <SelectItem value="PROVIDER">Provider</SelectItem>
-                      {/* <SelectItem value="admin">Admin</SelectItem> */}
                     </SelectContent>
                   </Select>
-                  <FieldError>{fieldState.error?.message}</FieldError>
+                  {fieldState.error && (
+                    <FieldError>{fieldState.error.message}</FieldError>
+                  )}
                 </Field>
               )}
             />
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" form="signup-form" className="w-full">
+
+      <CardFooter className="flex flex-col gap-4 pt-6">
+        <Button
+          type="submit"
+          form="signup-form"
+          className="h-11 w-full rounded-lg text-base font-semibold"
+        >
           Sign up
         </Button>
-        <CardDescription>
-          Already have an account,{' '}
-          <Link className="hover:underline" href="/login">
+
+        <CardDescription className="text-center text-sm">
+          Already have an account?{' '}
+          <Link
+            className="font-medium text-primary underline-offset-4 hover:underline"
+            href="/login"
+          >
             Log in
-          </Link>{' '}
-          now
+          </Link>
         </CardDescription>
       </CardFooter>
     </Card>

@@ -21,11 +21,7 @@ import { useState } from 'react';
 import EditUserFormModalAdmin from '@/components/EditUserFormModalAdmin';
 import { useDeleteUser } from '../../_api/mutation';
 
-export const columns: ColumnDef<User>[] = [
-  {
-    accessorKey: 'id',
-    header: 'Id',
-  },
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
@@ -41,6 +37,16 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'role',
     header: 'Role',
+  },
+  {
+    accessorKey: 'workspaces',
+    header: 'Workspaces',
+    cell: ({ row }) => {
+      const workspaces = row.original.workspace
+        .map((workspace: any) => workspace.name)
+        .join(', ');
+      return <span>{workspaces}</span>;
+    },
   },
   {
     id: 'actions',

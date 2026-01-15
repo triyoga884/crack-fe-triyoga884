@@ -10,11 +10,15 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isLoading, isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated, user } = useAuth();
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!isAuthenticated) redirect('/login');
+  if (!isAuthenticated) {
+    redirect('/login');
+  } else if (isAuthenticated && user.role === 'USER') {
+    redirect('/');
+  }
 
   return (
     <SidebarProvider>

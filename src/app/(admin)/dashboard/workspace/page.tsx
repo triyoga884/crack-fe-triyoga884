@@ -27,6 +27,8 @@ function Page() {
     apiToWorkspaceUpdateFormSchema.parse(room)
   );
 
+  console.log(fixData);
+
   return (
     <div>
       <div className="p-2 flex flex-row-reverse">

@@ -13,6 +13,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from '../../../../components/ui/button';
 import { useState } from 'react';
 import { useAuth } from '../../../../hooks/useAuth';
+import { rupiahFormat } from '../../../../lib/rupiahFormatter';
 
 function Page() {
   const { id } = useParams();
@@ -30,33 +31,35 @@ function Page() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto max-w-7xl px-4">
       {isPending ? (
-        <div className="min-h-[calc(100vh-300px)]  flex flex-col gap-4 p-4 md:flex-row my-8 md:my-12">
-          <Skeleton className="h-[300px] md:h-[450px] md:flex-1" />
-          <div className="flex flex-col gap-2 md:gap-4  md:flex-1">
-            <Skeleton className="h-4 md:w-[80%]" />
+        <div className="my-10 flex min-h-[calc(100vh-300px)] flex-col gap-6 md:flex-row">
+          <Skeleton className="h-80 w-full rounded-xl md:h-[460px] md:flex-1" />
+
+          <div className="flex flex-1 flex-col gap-3">
+            <Skeleton className="h-5 w-3/4" />
             <Skeleton className="h-4" />
-            <Skeleton className="h-4 md:w-[50%]" />
-            <Skeleton className="h-4 md:w-[80%]" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-4 w-4/5" />
             <Skeleton className="h-4" />
-            <Skeleton className="h-4 md:w-[50%]" />
-            <Skeleton className="h-10 w-[20%]" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-10 w-32 rounded-md" />
           </div>
         </div>
       ) : (
-        <div className="min-h-[calc(100vh-300px)] flex flex-col gap-4 p-4 md:flex-row my-8 md:my-12">
-          {/* workspace image */}
+        <div className="my-10 flex min-h-[calc(100vh-300px)] flex-col gap-8 md:flex-row">
+          {/* Workspace Image */}
           <Carousel className="md:flex-1">
             <CarouselContent>
               {data?.images.map((img: string, index: number) => (
                 <CarouselItem key={index}>
-                  <div className="img h-[300px] md:h-[450px] w-full relative">
+                  <div className="relative h-80 w-full overflow-hidden rounded-xl md:h-[460px]">
                     <Image
                       src={img}
                       alt="Workspace Image"
-                      unoptimized
                       fill
+                      unoptimized
+                      className="object-cover transition-transform duration-300 hover:scale-105"
                       loading="eager"
                     />
                   </div>
@@ -64,32 +67,77 @@ function Page() {
               ))}
             </CarouselContent>
           </Carousel>
-          {/* workspace desc */}
-          <div className="space-y-4 flex-1">
-            <h1 className="text-2xl font-bold">{data?.name}</h1>
-            <p>{data?.desc}</p>
-            <Separator />
+
+          {/* Workspace Description */}
+          <div className="flex flex-1 flex-col space-y-6">
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold">Amenities</h2>
-              <ul className="list-disc list-inside">
+              <h1 className="text-3xl font-bold tracking-tight">
+                {data?.name}
+              </h1>
+              <p className="text-muted-foreground leading-relaxed">
+                {data?.description}
+              </p>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-3">
+              <h2 className="text-lg font-semibold">Amenities</h2>
+              <ul className="list-inside list-disc space-y-1 text-sm">
                 {data?.amenities.map((amenity: string, index: number) => (
                   <li key={index}>{amenity}</li>
                 ))}
               </ul>
             </div>
+
             <Separator />
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">Location</h2>
-              <p>{data?.address}</p>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-1">
+                <h2 className="text-sm font-medium text-muted-foreground">
+                  Type
+                </h2>
+                <p className="font-medium">{data?.type}</p>
+              </div>
+
+              <div className="space-y-1">
+                <h2 className="text-sm font-medium text-muted-foreground">
+                  Capacity
+                </h2>
+                <p className="font-medium">{data?.capacity} person</p>
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <h2 className="text-sm font-medium text-muted-foreground">
+                  Location
+                </h2>
+                <p className="font-medium">{data?.address}</p>
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <h2 className="text-sm font-medium text-muted-foreground">
+                  Price
+                </h2>
+                <p className="text-lg font-semibold">
+                  {rupiahFormat(data?.pricePerDay)}
+                  <span className="text-sm font-normal text-muted-foreground">
+                    {' '}
+                    / day
+                  </span>
+                </p>
+              </div>
             </div>
+
             <Separator />
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">Price</h2>
-              <p>${data?.pricePerDay}/day</p>
-            </div>
-            <Separator />
-            {/* dialog booking workspace */}
-            <Button onClick={handleModal}>Book Now</Button>
+
+            <Button
+              size="lg"
+              className="w-full md:w-fit px-10"
+              onClick={handleModal}
+            >
+              Book Now
+            </Button>
+
             <BookingFormModal
               workspace={data!}
               modalOpen={modalOpen}
@@ -101,5 +149,4 @@ function Page() {
     </div>
   );
 }
-
 export default Page;

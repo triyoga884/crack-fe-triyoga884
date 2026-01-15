@@ -69,3 +69,13 @@ export async function postPayment(payment: Payment) {
   const data = res.json();
   return data;
 }
+
+// USER
+
+export async function getProfile() {
+  const res = await fetch(`${API}/users/me`, {
+    credentials: 'include',
+  });
+  const data = res.json();
+  return data;
+}

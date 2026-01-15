@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login, logout, register } from './api';
+import { redirect, useRouter } from 'next/navigation';
 
 export function useLogin() {
   const queryClient = useQueryClient();
@@ -14,12 +15,15 @@ export function useLogin() {
 
 export function useLogout() {
   const queryClient = useQueryClient();
+  const router = useRouter();
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
       queryClient.removeQueries({
         queryKey: ['me'],
       });
+      router.push('/login');
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
     },
   });
 }

@@ -24,6 +24,20 @@ export interface Room {
   images: { url: string }[];
 }
 
+export interface RawRoom {
+  id: string;
+  name: string;
+  address: string;
+  description: string;
+  amenities: string[];
+  pricePerDay: number;
+  type: RoomType;
+  capacity: number;
+  isActive: boolean;
+  isVerified: boolean;
+  images: string[];
+}
+
 export type WorkspaceTab = {
   name: string;
   value: string;

@@ -6,12 +6,15 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import Link from 'next/link';
+
 function MobileFooter() {
   return (
-    <div className="mobile-footer md:hidden">
-      <h1 className="text-2xl font-bold ">WORKBASE</h1>
-      <p className="">Book Your Space, Unlock Your Potential</p>
-      <Accordion type="single" collapsible>
+    <div className="mobile-footer md:hidden px-6 py-8 space-y-6">
+      <div className="space-y-1 text-center">
+        <h1 className="text-2xl font-bold tracking-tight">WORKBASE</h1>
+        <p className="text-sm">Book Your Space, Unlock Your Potential</p>
+      </div>
+      <Accordion type="single" collapsible className="space-y-2">
         <AccordionItem value="company">
           <AccordionTrigger className="text-lg font-medium">
             Company

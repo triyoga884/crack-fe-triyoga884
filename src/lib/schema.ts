@@ -87,6 +87,7 @@ export const apiToWorkspaceUpdateFormSchema = z
     capacity: z.number(),
     isActive: z.boolean(),
     isVerified: z.boolean(),
+    owner: z.object({ name: z.string() }),
   })
   .transform((data) => ({
     ...data,

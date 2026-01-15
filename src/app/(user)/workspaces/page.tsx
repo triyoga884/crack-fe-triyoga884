@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Room } from '@/lib/type';
+import { RawRoom } from '@/lib/type';
 import {
   Pagination,
   PaginationContent,
@@ -33,6 +33,8 @@ function Page() {
     console.log(value);
   };
 
+  console.log(data);
+
   return (
     <div className="lg:py-8">
       <div className="min-h-screen container mx-auto px-4 ">
@@ -58,7 +60,7 @@ function Page() {
             ))
           ) : (
             <>
-              {data?.map((e: Room) => (
+              {data?.map((e: RawRoom) => (
                 <RoomCard key={`room-${e.id}`} {...e} />
               ))}
             </>

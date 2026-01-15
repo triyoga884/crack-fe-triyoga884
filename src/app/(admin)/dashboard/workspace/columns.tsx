@@ -21,14 +21,28 @@ import { useState } from 'react';
 import EditWorkspaceFormModal from '@/components/EditWorkspaceFormModal';
 import { useDeleteWorkspace } from '../../_api/mutation';
 
-export const columns: ColumnDef<Room>[] = [
+interface RoomDashboard extends Room {
+  owner: { name: string };
+}
+
+export const columns: ColumnDef<RoomDashboard>[] = [
   {
     accessorKey: 'name',
     header: 'Room Name',
   },
   {
+    accessorKey: 'providerName',
+    header: 'Provider Name',
+    cell: ({ row }) => {
+      return <span>{row.original.owner.name}</span>;
+    },
+  },
+  {
     accessorKey: 'capacity',
     header: 'Capacity',
+    cell: ({ row }) => {
+      return <span>{row.original.capacity} person</span>;
+    },
   },
   {
     accessorKey: 'isActive',
@@ -45,6 +59,9 @@ export const columns: ColumnDef<Room>[] = [
   {
     accessorKey: 'pricePerDay',
     header: 'Price Per Day',
+    cell: ({ row }) => {
+      return <span>Rp.{row.original.pricePerDay}</span>;
+    },
   },
   {
     accessorKey: 'amenities',
@@ -63,6 +80,7 @@ export const columns: ColumnDef<Room>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
+      console.log(row.original);
       const { mutate: deleteWorkspace } = useDeleteWorkspace();
       const workspace = row.original;
       const handleDelete = (id: string) => {
