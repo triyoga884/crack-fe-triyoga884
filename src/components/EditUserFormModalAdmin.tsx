@@ -46,7 +46,6 @@ function EditWorkspaceFormModalAdmin({
   const { mutate: update } = useUpdateUser();
 
   const onSubmit = (data: UserSchema) => {
-    // console.log('Submitting:', data);
     update(data);
     onClose?.();
   };

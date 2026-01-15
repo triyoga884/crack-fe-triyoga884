@@ -127,3 +127,21 @@ export async function deleteBooking(id: string) {
   const data = res.json();
   return data;
 }
+
+// STAT
+
+export async function getAllStat() {
+  const res = await fetch(`${API}/stats`, {
+    credentials: 'include',
+  });
+  const data = res.json();
+  return data;
+}
+
+export async function getStatProvider() {
+  const res = await fetch(`${API}/stats/me`, {
+    credentials: 'include',
+  });
+  const data = res.json();
+  return data;
+}

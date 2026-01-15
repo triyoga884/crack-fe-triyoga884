@@ -15,9 +15,6 @@ function Page() {
     user.userId
   );
 
-  console.log('admin', admin);
-  console.log('provider', provider);
-
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const isProvider = user?.role === 'PROVIDER';

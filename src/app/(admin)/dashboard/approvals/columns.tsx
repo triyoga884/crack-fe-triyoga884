@@ -7,15 +7,26 @@ import { Dialog } from '@/components/ui/dialog';
 import { useState } from 'react';
 import ConfirmModal from '@/components/ConfirmModal';
 import { useDeleteWorkspace, useUpdateWorkspace } from '../../_api/mutation';
+import { RawRoomDashboard } from '../../../../lib/type';
 
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<RawRoomDashboard>[] = [
   {
     accessorKey: 'name',
     header: 'Room Name',
   },
   {
+    accessorKey: 'providerName',
+    header: 'Provider Name',
+    cell: ({ row }) => {
+      return <span>{row.original.owner.name}</span>;
+    },
+  },
+  {
     accessorKey: 'capacity',
     header: 'Capacity',
+    cell: ({ row }) => {
+      return <span>{row.original.capacity} person</span>;
+    },
   },
   {
     accessorKey: 'isActive',
@@ -54,7 +65,6 @@ export const columns: ColumnDef<any>[] = [
 
       const handleApprove = () => {
         workspace.isVerified = true;
-        console.log(workspace);
         update(workspace);
         setModalApproveOpen(false);
       };

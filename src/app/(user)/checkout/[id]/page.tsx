@@ -21,7 +21,6 @@ import { rupiahFormat } from '../../../../lib/rupiahFormatter';
 function Page() {
   const { id } = useParams();
   const { data: booking, isPending, error } = useCheckout(id as string);
-  console.log(booking);
 
   const { mutate: postPayment } = usePayment();
   const router = useRouter();
@@ -34,7 +33,6 @@ function Page() {
 
   const onSubmit = (data: { method: string }) => {
     const req = { method: data.method, bookingId: booking.id };
-    console.log(req);
     postPayment(req, {
       onSuccess: () => router.push('/'),
     });

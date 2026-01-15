@@ -75,10 +75,8 @@ function CreateWorkspaceFormModal({ onClose }: { onClose: () => void }) {
     name: 'images',
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (data: WorkspaceCreateFormSchema) => {
     const formated = workspaceCreateToApiSchema.parse(data);
-    console.log('Create Workspace Data:', formated);
     create(formated);
     onClose?.();
     form.reset();

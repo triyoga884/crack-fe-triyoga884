@@ -27,7 +27,7 @@ import {
 import Link from 'next/link';
 import { useAuth } from '../hooks/useAuth';
 import { useLogout } from '../auth/mutations';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const items = [
   {
@@ -72,6 +72,12 @@ function AdminSidebar() {
     itemsFix = filteredItems;
   } else itemsFix = items;
 
+  let title = 'Dashboard';
+
+  if (user?.role === 'ADMIN') {
+    title = 'Admin Dashboard';
+  } else title = 'Provider Dashboard';
+
   const handleLogout = () => {
     logout(undefined, { onSuccess: () => router.push('/login') });
   };
@@ -84,7 +90,7 @@ function AdminSidebar() {
       <SidebarHeader />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Admin Dashboard</SidebarGroupLabel>
+          <SidebarGroupLabel>{title}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {itemsFix.map((item) => (

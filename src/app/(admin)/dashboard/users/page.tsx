@@ -6,7 +6,6 @@ import { useUsers } from '../../_api/queries';
 function Page() {
   const { data, isLoading, error } = useUsers();
 
-  console.log(data);
   return (
     <div>
       {isLoading && <div>Loading...</div>}

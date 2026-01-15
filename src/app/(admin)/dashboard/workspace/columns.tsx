@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Room } from '@/lib/type';
+import { RoomDashboard } from '@/lib/type';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,10 +20,6 @@ import {
 import { useState } from 'react';
 import EditWorkspaceFormModal from '@/components/EditWorkspaceFormModal';
 import { useDeleteWorkspace } from '../../_api/mutation';
-
-interface RoomDashboard extends Room {
-  owner: { name: string };
-}
 
 export const columns: ColumnDef<RoomDashboard>[] = [
   {
@@ -80,7 +76,6 @@ export const columns: ColumnDef<RoomDashboard>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      console.log(row.original);
       const { mutate: deleteWorkspace } = useDeleteWorkspace();
       const workspace = row.original;
       const handleDelete = (id: string) => {

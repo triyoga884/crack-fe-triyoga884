@@ -1,44 +1,44 @@
 'use client';
 import DashboardCard from '@/components/DashboardCard';
-import { Card } from '@/components/ui/card';
-import React from 'react';
+import { useAllStat, useStatProvider } from '../_api/queries';
+import { Stat } from '../../../lib/type';
+import { Skeleton } from '../../../components/ui/skeleton';
+import { useAuth } from '../../../hooks/useAuth';
 
 function Page() {
-  const data = [
-    {
-      title: 'Total Users',
-      value: 250,
-    },
-    {
-      title: 'Total Workspaces',
-      value: 540,
-    },
-    {
-      title: 'Total Booking',
-      value: 120,
-    },
-    {
-      title: 'Total Providers',
-      value: 15,
-    },
-  ];
+  const { user } = useAuth();
+  const { data: adminStats, isPending: adminLoading } = useAllStat(user.role);
+  const { data: providerStats, isPending: providerLoading } = useStatProvider(
+    user.userId
+  );
+
+  const isProvider = user?.role === 'PROVIDER';
+  const data = isProvider ? providerStats : adminStats;
+  const loading = isProvider ? providerLoading : adminLoading;
 
   return (
-    <div>
-      {/* dashboard content */}
-      <div>
-        <div className="card-section grid grid-cols-2 gap-4 lg:grid-cols-4 p-4">
-          {data.map((item) => (
+    <div className="space-y-6">
+      {/* Dashboard Content */}
+      {loading ? (
+        <div className="grid grid-cols-2 gap-4 p-4 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-2 rounded-xl border bg-card p-4 shadow-sm"
+            >
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-8 w-16" />
+              <Skeleton className="h-3 w-20" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4 p-4 lg:grid-cols-4">
+          {data.map((item: Stat) => (
             <DashboardCard key={item.title} {...item} />
           ))}
         </div>
-        <div className="flex p-4 gap-4">
-          <Card>
-            <h2>Awaiting Workspaces Approval List</h2>
-            <p>12 left</p>
-          </Card>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

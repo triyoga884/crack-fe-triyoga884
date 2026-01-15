@@ -88,7 +88,6 @@ function EditWorkspaceFormModal({
 
   const onSubmit = (data: WorkspaceUpdateFormSchema) => {
     const updatedWorkspace = workspaceUpdateFormToApiSchema.parse(data);
-    console.log('Updated Workspace Data:', updatedWorkspace);
     update(updatedWorkspace);
     onClose?.();
   };
@@ -99,7 +98,8 @@ function EditWorkspaceFormModal({
         <DialogHeader>
           <DialogTitle>Edit Workspace - {payload?.name}</DialogTitle>
           <DialogDescription>
-            Make changes to the workspace here. Click save when you're done.
+            Make changes to the workspace here. Click save when you&apos;re
+            done.
           </DialogDescription>
         </DialogHeader>
         <FieldGroup className="grid md:grid-cols-2 gap-4 py-4">

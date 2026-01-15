@@ -66,7 +66,6 @@ function BookingFormModal({ workspace, modalOpen, setModalOpen }: Prop) {
       startDate: dateOnly(data.startDate),
       endDate: dateOnly(data.endDate),
     };
-    console.log(formatData);
     postBooking(formatData, {
       onSuccess: (response) => {
         const id = response.id;

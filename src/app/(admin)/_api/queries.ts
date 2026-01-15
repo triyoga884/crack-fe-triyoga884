@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import {
+  getAllStat,
   getBookings,
   getBookingsMyWorkspace,
+  getStatProvider,
   getUsers,
   getWorkspaceByUserId,
 } from './api';
@@ -32,5 +34,21 @@ export function useBookingMyWorkspace(userId: string) {
   return useQuery({
     queryKey: ['bookings', userId],
     queryFn: getBookingsMyWorkspace,
+  });
+}
+
+export function useAllStat(role: string) {
+  return useQuery({
+    queryKey: ['stats', role],
+    queryFn: getAllStat,
+    refetchOnMount: 'always',
+  });
+}
+
+export function useStatProvider(userId: string) {
+  return useQuery({
+    queryKey: ['stats', userId],
+    queryFn: getStatProvider,
+    refetchOnMount: 'always',
   });
 }

@@ -38,6 +38,13 @@ export interface RawRoom {
   images: string[];
 }
 
+export interface RoomDashboard extends Room {
+  owner: { name: string };
+}
+export interface RawRoomDashboard extends RawRoom {
+  owner: { name: string };
+}
+
 export type WorkspaceTab = {
   name: string;
   value: string;
@@ -63,4 +70,9 @@ export type Booking = {
 export type Payment = {
   bookingId: string;
   method: string;
+};
+
+export type Stat = {
+  title: string;
+  value: number;
 };
