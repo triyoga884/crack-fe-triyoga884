@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { User } from '@/lib/type';
+import { UserDashboard } from '@/lib/type';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +21,7 @@ import { useState } from 'react';
 import EditUserFormModalAdmin from '@/components/EditUserFormModalAdmin';
 import { useDeleteUser } from '../../_api/mutation';
 
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<UserDashboard>[] = [
   {
     accessorKey: 'name',
     header: 'Name',

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import ConfirmModal from '@/components/ConfirmModal';
 import { useDeleteWorkspace, useUpdateWorkspace } from '../../_api/mutation';
 import { RawRoomDashboard } from '../../../../lib/type';
+import { rupiahFormat } from '../../../../lib/rupiahFormatter';
 
 export const columns: ColumnDef<RawRoomDashboard>[] = [
   {
@@ -43,6 +44,9 @@ export const columns: ColumnDef<RawRoomDashboard>[] = [
   {
     accessorKey: 'pricePerDay',
     header: 'Price Per Day',
+    cell: ({ row }) => {
+      return <span>{rupiahFormat(row.original.pricePerDay)}</span>;
+    },
   },
   {
     accessorKey: 'amenities',

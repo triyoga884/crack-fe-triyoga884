@@ -20,6 +20,7 @@ import {
 import { useState } from 'react';
 import EditWorkspaceFormModal from '@/components/EditWorkspaceFormModal';
 import { useDeleteWorkspace } from '../../_api/mutation';
+import { rupiahFormat } from '../../../../lib/rupiahFormatter';
 
 export const columns: ColumnDef<RoomDashboard>[] = [
   {
@@ -56,7 +57,7 @@ export const columns: ColumnDef<RoomDashboard>[] = [
     accessorKey: 'pricePerDay',
     header: 'Price Per Day',
     cell: ({ row }) => {
-      return <span>Rp.{row.original.pricePerDay}</span>;
+      return <span>{rupiahFormat(row.original.pricePerDay)}</span>;
     },
   },
   {
