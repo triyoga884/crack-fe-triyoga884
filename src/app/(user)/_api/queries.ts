@@ -1,10 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import {
   getAllWorkspaces,
   getAvailableDates,
   getChekoutData,
   getProfile,
   getWorkspaceById,
+  searchWorkspace,
 } from './api';
 
 export function useAllWorkspaces(isVerified: boolean) {
@@ -19,6 +20,14 @@ export function useWorkspaceById(id: string) {
     queryKey: ['workspace', id],
     queryFn: () => getWorkspaceById(id),
     enabled: !!id,
+  });
+}
+
+export function useSearchWorkspace(search: string, type: string) {
+  return useQuery({
+    queryKey: ['workspaces', search, type],
+    queryFn: () => searchWorkspace(search, type),
+    placeholderData: keepPreviousData,
   });
 }
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   InputGroup,
   InputGroupAddon,
@@ -9,45 +8,61 @@ import { SearchIcon } from 'lucide-react';
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useState } from 'react';
 
 function SearchBar({
-  search,
-  setSearch,
-  handleSearch,
-  handleCategoryChange,
-}: any) {
+  initialSearch,
+  type,
+  setFilters,
+}: {
+  initialSearch: string;
+  type: string;
+  setFilters: (value: Partial<{ search: string; type: string }>) => void;
+}) {
+  const [localSearch, setLocalSearch] = useState(initialSearch);
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      setFilters({ search: localSearch });
+    }
+  };
+
   return (
     <div className="search-bar flex flex-col lg:flex-row gap-4 mt-8">
       <InputGroup>
         <InputGroupInput
-          value={search}
-          onChange={(e: any) => setSearch(e.target.value)}
+          value={localSearch}
+          onChange={(e) => setLocalSearch(e.target.value)}
           placeholder="Search..."
+          onKeyDown={handleKeyDown}
         />
         <InputGroupAddon>
           <SearchIcon />
         </InputGroupAddon>
         <InputGroupAddon align="inline-end">
-          <InputGroupButton onClick={() => handleSearch(search)}>
+          <InputGroupButton onClick={() => setFilters({ search: localSearch })}>
             Search
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
-      <Select onValueChange={(value: string) => handleCategoryChange(value)}>
+      <Select
+        value={type}
+        onValueChange={(value) => setFilters({ type: value })}
+      >
         <SelectTrigger className="w-full lg:w-1/2">
           <SelectValue placeholder="Select Room Type" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Type</SelectItem>
-          <SelectItem value="meeting room">Meeting Room</SelectItem>
-          <SelectItem value="private office">Private Office</SelectItem>
-          <SelectItem value="podcast studio">Podcast Studio</SelectItem>
+          <SelectItem defaultChecked={true} value="ALL">
+            All Type
+          </SelectItem>
+          <SelectItem value="MEETING_ROOM">Meeting Room</SelectItem>
+          <SelectItem value="PRIVATE_OFFICE">Private Office</SelectItem>
+          <SelectItem value="PODCAST_STUDIO">Podcast Studio</SelectItem>
         </SelectContent>
       </Select>
     </div>

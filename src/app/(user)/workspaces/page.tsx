@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { RawRoom } from '@/lib/type';
 import {
   Pagination,
@@ -12,40 +11,24 @@ import {
 } from '@/components/ui/pagination';
 import RoomCard from '@/components/RoomCard';
 import SearchBar from '@/components/SearchBar';
-import { useAllWorkspaces } from '../_api/queries';
+import { useSearchWorkspace } from '../_api/queries';
 import { Skeleton } from '../../../components/ui/skeleton';
-import { useAuth } from '../../../hooks/useAuth';
+import { useWorkspaceFilters } from '../../../lib/searchParamsFilter';
+import { SearchX } from 'lucide-react';
 
 function Page() {
-  const { data, isPending, error } = useAllWorkspaces(true);
-
-  const { user } = useAuth();
-  console.log(user);
-
-  const [search, setSearch] = React.useState('');
-
-  const handleSearch = (e: string): any => {
-    console.log(e);
-    setSearch('');
-  };
-
-  const handleCategoryChange = (value: string): any => {
-    console.log(value);
-  };
-
-  console.log(data);
+  const [{ search, type }, setFilters] = useWorkspaceFilters();
+  const { data: searchData, isPending: searchLoading } = useSearchWorkspace(
+    search,
+    type
+  );
 
   return (
     <div className="lg:py-8">
       <div className="min-h-screen container mx-auto px-4 ">
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-          handleSearch={handleSearch}
-          handleCategoryChange={handleCategoryChange}
-        />
+        <SearchBar initialSearch={search} type={type} setFilters={setFilters} />
         <div className="workspaces-list grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4 place-items-stretch">
-          {isPending ? (
+          {searchLoading ? (
             Array.from({ length: 12 }).map((_, idx) => (
               <div className="space-y-2" key={idx}>
                 <Skeleton className="h-[300px]" />
@@ -60,14 +43,28 @@ function Page() {
             ))
           ) : (
             <>
-              {data?.map((e: RawRoom) => (
-                <RoomCard key={`room-${e.id}`} {...e} />
-              ))}
+              {searchData.statusCode === 404 ? (
+                <div className="col-span-full flex flex-col items-center justify-center rounded-xl border bg-card py-16 text-center">
+                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted text-2xl">
+                    <SearchX />
+                  </div>
+
+                  <h2 className="text-lg font-semibold">No workspaces found</h2>
+
+                  <p className="mt-1 max-w-md text-sm text-muted-foreground">
+                    We couldn’t find any workspaces matching your search. Try
+                    adjusting your filters or search keywords.
+                  </p>
+                </div>
+              ) : (
+                searchData?.map((e: RawRoom) => (
+                  <RoomCard key={`room-${e.id}`} {...e} />
+                ))
+              )}
             </>
           )}
         </div>
-
-        <Pagination className="mt-8">
+        {/* <Pagination className="mt-8">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious href="#" />
@@ -82,7 +79,7 @@ function Page() {
               <PaginationNext href="#" />
             </PaginationItem>
           </PaginationContent>
-        </Pagination>
+        </Pagination> */}
       </div>
     </div>
   );

@@ -113,3 +113,10 @@ npm run lint
 - This project assumes an existing backend that implements the authentication and booking APIs exposed under `NEXT_PUBLIC_LOCAL_API`.
 - Authentication uses cookie-based sessions (`credentials: 'include'` on API calls).
 
+## Live Demo
+
+Check out the live demo of the application:
+
+- **URL**: [https://workbase1.netlify.app/](https://workbase1.netlify.app/)
+- **Username**: `admin@example.com`
+- **Password**: `password123`

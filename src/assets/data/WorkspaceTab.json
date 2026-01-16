@@ -1,7 +1,7 @@
 [
   {
     "name": "Private Office",
-    "value": "private-office",
+    "value": "PRIVATE_OFFICE",
     "desc": "Secure your own dedicated, fully-furnished space built for focus and confidentiality. Our Private Offices are perfect for small teams or individuals who need a permanent, branded hub where they can work without distraction.",
     "key_benefit": [
       "Total Privacy",
@@ -13,7 +13,7 @@
   },
   {
     "name": "Meeting Room",
-    "value": "meeting-room",
+    "value": "MEETING_ROOM",
     "desc": "Professional, technology-equipped rooms designed for seamless collaboration and client presentations. Choose the right size, from intimate huddle rooms to large boardrooms, all with plug-and-play simplicity.",
     "key_benefit": [
       "Seamless Tech",
@@ -25,7 +25,7 @@
   },
   {
     "name": "Podcast Studio",
-    "value": "podcast-studio",
+    "value": "PODCAST_STUDIO",
     "desc": "Step into our acoustically-treated, soundproof studio, ready with professional-grade microphones, mixers, and lighting. This is the ultimate dedicated space to record high-quality audio and video content without interference.",
     "key_benefit": [
       "Broadcast Quality",

@@ -15,6 +15,16 @@ export async function getWorkspaceById(id: string) {
   return data;
 }
 
+export async function searchWorkspace(search: string, type: string) {
+  const params = new URLSearchParams();
+  if (search) params.append('name', search);
+  if (type !== 'ALL') params.append('type', type);
+
+  const rest = await fetch(`${API}/workspaces?${params.toString()}`);
+  const data = rest.json();
+  return data;
+}
+
 // BOOKING
 export async function getAvailableDates(id: string) {
   const res = await fetch(`${API}/bookings/${id}/availability`);

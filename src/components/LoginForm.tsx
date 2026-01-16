@@ -25,8 +25,8 @@ function LoginForm() {
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema) as any,
     defaultValues: {
-      email: 'admin@example.com',
-      password: 'password123',
+      email: '',
+      password: '',
     },
   });
   const { mutate: login, isPending, error } = useLogin();

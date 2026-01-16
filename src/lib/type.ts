@@ -53,13 +53,17 @@ export type WorkspaceTab = {
   image: string;
 };
 
-export type User = {
+export interface User {
   id: string;
   name: string;
   email: string;
   role: UserRoles;
   phone: string;
-};
+}
+
+export interface UserDashboard extends User {
+  workspace: { name: string }[];
+}
 
 export type Booking = {
   workspaceId: string;
