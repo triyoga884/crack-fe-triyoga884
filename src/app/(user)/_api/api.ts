@@ -20,7 +20,7 @@ export async function searchWorkspace(search: string, type: string) {
   if (search) params.append('name', search);
   if (type !== 'ALL') params.append('type', type);
 
-  const rest = await fetch(`${API}/workspaces?${params.toString()}`);
+  const rest = await fetch(`${API}/workspaces/search?${params.toString()}`);
   const data = rest.json();
   return data;
 }
