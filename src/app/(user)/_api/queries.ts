@@ -4,6 +4,7 @@ import {
   getAvailableDates,
   getChekoutData,
   getProfile,
+  getUserBookings,
   getWorkspaceById,
   searchWorkspace,
 } from './api';
@@ -45,6 +46,14 @@ export function useCheckout(id: string) {
     queryKey: ['booking', id],
     queryFn: () => getChekoutData(id),
     enabled: !!id,
+  });
+}
+
+export function useUserBookings() {
+  return useQuery({
+    queryKey: ['bookings'],
+    queryFn: getUserBookings,
+    refetchOnMount: 'always',
   });
 }
 

@@ -61,6 +61,17 @@ export async function getChekoutData(id: string) {
   return data;
 }
 
+export async function getUserBookings() {
+  const res = await fetch(`${API}/bookings/me`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  const data = await res.json();
+  return data;
+}
+
 // PAYMENT
 
 export async function postPayment(payment: Payment) {
