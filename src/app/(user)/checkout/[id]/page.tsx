@@ -17,6 +17,14 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { dateOnly } from '../../../../lib/datesFormatter';
 import { usePayment } from '../../_api/mutations';
 import { rupiahFormat } from '../../../../lib/rupiahFormatter';
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 function Page() {
   const { id } = useParams();
@@ -24,6 +32,8 @@ function Page() {
 
   const { mutate: postPayment } = usePayment();
   const router = useRouter();
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -34,7 +44,7 @@ function Page() {
   const onSubmit = (data: { method: string }) => {
     const req = { method: data.method, bookingId: booking.id };
     postPayment(req, {
-      onSuccess: () => router.push('/'),
+      onSuccess: () => setModalOpen(true),
     });
   };
 
@@ -157,6 +167,47 @@ function Page() {
               Confirm Payment
             </Button>
           </div>
+
+          {/* Modal Confirmation */}
+          <Dialog
+            open={modalOpen}
+            onOpenChange={(open) => {
+              if (!open) {
+                router.push('/');
+              }
+            }}
+          >
+            <DialogContent className="max-w-md rounded-xl">
+              <DialogHeader className="space-y-4">
+                {/* Icon */}
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-2xl text-green-600">
+                  ✓
+                </div>
+
+                <DialogTitle className="text-center text-xl font-semibold">
+                  Payment Confirmed
+                </DialogTitle>
+
+                <DialogDescription className="text-center text-sm leading-relaxed text-muted-foreground">
+                  Your payment for{' '}
+                  <span className="font-medium text-foreground">
+                    {booking.coworkingSpace.name}
+                  </span>{' '}
+                  has been successfully processed.
+                  <br />
+                  You can now return to the homepage or continue browsing
+                  workspaces.
+                </DialogDescription>
+              </DialogHeader>
+
+              {/* Actions */}
+              <div className="mt-6 flex justify-center">
+                <Button className="px-8" onClick={() => router.push('/')}>
+                  Go to Home
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
     </div>
