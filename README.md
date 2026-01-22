@@ -1,5 +1,4 @@
-Coworking Space Booking App
-===========================
+# Coworking Space Booking App
 
 A web application for managing coworking-space bookings, user profiles, and admin/provider dashboards.  
 Built with the Next.js App Router, React, Tailwind CSS, and Tanstack Query.
@@ -120,3 +119,33 @@ Check out the live demo of the application:
 - **URL**: [https://workbase1.netlify.app/](https://workbase1.netlify.app/)
 - **Username**: `admin@example.com`
 - **Password**: `password123`
+
+## Screenshoot Website
+
+#### Login
+
+![login page](src\assets\images\login.png)
+
+#### Landing Page
+
+![login page](src\assets\images\landing-page.png)
+
+#### Workspaces Page
+
+![login page](src\assets\images\workspaces.png)
+
+#### Workspace Detail Page
+
+![login page](src\assets\images\workspace-detail.png)
+
+#### Booking Page
+
+![login page](src\assets\images\booking.png)
+
+#### Payment Page
+
+![login page](src\assets\images\payment.png)
+
+#### Dashboard Page
+
+![login page](src\assets\images\dashboard.png)
