@@ -120,7 +120,7 @@ Check out the live demo of the application:
 - **Username**: `admin@example.com`
 - **Password**: `password123`
 
-## Screenshoot Website
+## Screenshot Website
 
 #### Login
 
