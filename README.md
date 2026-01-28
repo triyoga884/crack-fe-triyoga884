@@ -124,28 +124,28 @@ Check out the live demo of the application:
 
 #### Login
 
-![login page](src\assets\images\login.png)
+![login page](src/assets/images/login.png)
 
 #### Landing Page
 
-![login page](src\assets\images\landing-page.png)
+![landing page](src/assets/images/landing-page.png)
 
 #### Workspaces Page
 
-![login page](src\assets\images\workspaces.png)
+![workspaces page](src/assets/images/workspaces.png)
 
 #### Workspace Detail Page
 
-![login page](src\assets\images\workspace-detail.png)
+![worksapce detail page](src/assets/images/workspace-detail.png)
 
 #### Booking Page
 
-![login page](src\assets\images\booking.png)
+![booking page](src/assets/images/booking.png)
 
 #### Payment Page
 
-![login page](src\assets\images\payment.png)
+![payment page](src/assets/images/payment.png)
 
 #### Dashboard Page
 
-![login page](src\assets\images\dashboard.png)
+![admin dashboard page](src/assets/images/dashboard.png)
