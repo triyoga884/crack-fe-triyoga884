@@ -111,6 +111,8 @@ npm run lint
 
 ## Notes
 
+- The backend is currently off, so some pages may show errors when they rely on API responses.
+- Some pages are still usable because they display dummy data instead of backend data.
 - This project assumes an existing backend that implements the authentication and booking APIs exposed under `NEXT_PUBLIC_LOCAL_API`.
 - Authentication uses cookie-based sessions (`credentials: 'include'` on API calls).
 
