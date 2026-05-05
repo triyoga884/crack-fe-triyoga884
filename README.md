@@ -153,3 +153,9 @@ Check out the live demo of the application:
 #### Dashboard Page
 
 ![admin dashboard page](src/assets/images/dashboard.png)
+
+## Demo Video
+
+Register & Login Flow
+[Register Login](https://github.com/user-attachments/assets/f226d892-fcb2-4a3f-b3e2-01634682c6f3)
+
