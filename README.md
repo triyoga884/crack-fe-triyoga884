@@ -156,6 +156,24 @@ Check out the live demo of the application:
 
 ## Demo Video
 
-Register & Login Flow
-[Register Login](https://github.com/user-attachments/assets/f226d892-fcb2-4a3f-b3e2-01634682c6f3)
+[Register & Login Flow]([https://github.com/user-attachments/assets/f226d892-fcb2-4a3f-b3e2-01634682c6f3](https://github.com/user-attachments/assets/bc14e7e3-b1fc-4731-b7bb-e28499c77bd4))
+
+https://github.com/user-attachments/assets/bc14e7e3-b1fc-4731-b7bb-e28499c77bd4
+
+[User Booking Flow]([https://github.com/user-attachments/assets/f226d892-fcb2-4a3f-b3e2-01634682c6f3](https://github.com/user-attachments/assets/9dabf94b-394c-4b78-b8cc-bf7c37b74d13))
+
+https://github.com/user-attachments/assets/9dabf94b-394c-4b78-b8cc-bf7c37b74d13
+
+[Provider Create List Workspace FLow]([https://github.com/user-attachments/assets/8d54a9a0-d2e7-48aa-9b35-17a99ea4a36a](https://github.com/user-attachments/assets/8d54a9a0-d2e7-48aa-9b35-17a99ea4a36a))
+
+https://github.com/user-attachments/assets/8d54a9a0-d2e7-48aa-9b35-17a99ea4a36a
+
+[Admin Approve Workspace FLow]([https://github.com/user-attachments/assets/6c4852f7-d64b-408b-b143-2fe79caa9eb1](https://github.com/user-attachments/assets/6c4852f7-d64b-408b-b143-2fe79caa9eb1))
+
+https://github.com/user-attachments/assets/6c4852f7-d64b-408b-b143-2fe79caa9eb1
+
+
+
+
+
 
